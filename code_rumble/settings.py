@@ -1,8 +1,9 @@
 import os
+from unipath import Path
  
 DEBUG = True
  
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))  
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 LOGIN_URL = '/'
 
 DEBUG = True
@@ -14,15 +15,17 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc')
+
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
             'OPTIONS': {
                 'init_command': 'SET storage_engine=INNODB',
             },
-            'NAME': 'code_rumble',
-            'USER': 'root',
-            'PASSWORD': 'cc3721b',
+            'OPTIONS': {
+                'read_default_file': os.path.join(PATH, 'rumble.cnf'),
+            },
             'HOST': '',
             'PORT': '',
         },
@@ -113,7 +116,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 )
 
-SECRET_KEY  = '9bu0-c0nf*pb-u=4thah0hdjj-1c(v)b_v!lw@u-jzpk4=bepe'
+SECRET_KEY  = os.path.join(PATH, 'rumble_secret.txt')
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
