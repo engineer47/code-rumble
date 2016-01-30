@@ -2,10 +2,9 @@ import uuid
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from .payment import Payment
 from .user_profile import UserProfile
-
-from ..constants import NEW, INDIVIDUAL, SHIPPER, ASSIGNED
+from .account_details import AccountDetails
+from ..constants import NEW, INDIVIDUAL, SHIPPER, ASSIGNED, ON_HOLD, ACCEPTED, PENDING
 from ..choices import JOB_STATUS, CARGO_TYPE
 
 
@@ -14,8 +13,6 @@ class Job(models.Model):
     """
     This model describes the job and its details.
     """
-
-    payment = models.ForeignKey(Payment, null=True)
 
     sumbittor = models.ForeignKey(UserProfile, related_name='profile_sumbittor')
 
@@ -59,6 +56,13 @@ class Job(models.Model):
         blank=True
     )
 
+    description = models.TextField(
+        verbose_name='Detailed description of Cargo',
+        max_length=250,
+        null=True,
+        blank=True
+    )
+
     def assign_job(self, exercutor):
         if exercutor.account == SHIPPER:
             self.exercutor = exercutor
@@ -67,9 +71,24 @@ class Job(models.Model):
         else:
             raise ValidationError('Only SHIPPER accounts can execute jobs. This is a "{}" account'.format(INDIVIDUAL))
 
+    def initiate_payment(self, amount, account_number):
+        Payment = models.get_model('main', 'Payment')
+        account_details = AccountDetails.objects.get(account_number=account_number)
+        payment = Payment.objects.get(job=self)
+        payment.account_details = account_details
+        payment.amount = amount
+        payment.payment_status = ON_HOLD
+        payment.save()
+
     def save(self, *args, **kwargs):
+        Payment = models.get_model('main', 'Payment')
         if not self.id:
             self.job_identifier = str(uuid.uuid4())
+        if self.job_status == ACCEPTED:
+            try:
+                Payment.objects.get(job=self)
+            except Payment.DoesNotExist:
+                Payment.objects.create(job=self, payment_status=PENDING)
         super(Job, self).save(*args, **kwargs)
 
     class Meta:
