@@ -24,7 +24,7 @@ class Notification(models.Model):
     )
 
     message = models.CharField(
-        verbose_name='Sender: ',
+        verbose_name='Message: ',
         max_length=5000,
         unique=True,
     )

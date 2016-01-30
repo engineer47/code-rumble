@@ -15,6 +15,7 @@
     <script src="{{ STATIC_URL }}less.js"></script>
     <script src="{{ STATIC_URL }}jquery-1.11.3.js"></script>
     <script src="{{ STATIC_URL }}thickbox.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" type="text/css" media="screen" />
@@ -40,7 +41,52 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<script>
+	 function initialize() {
+		 var myLatLng = {lat: 0, lng: -180};
+	  
+		 var mapProp = {
+	    center: myLatLng,
+	    zoom:1,
+	    mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+	  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+	  var contentString =
+      '<h5><b>Current Location</b></h5>'+
+      '<p>Distance travelled: 457km, distaance left to target location: 12km</p>';
+      
+      var infowindow = new google.maps.InfoWindow({
+    	    content: contentString
+    	  });
+      
+	  var marker = new google.maps.Marker({
+		    position: {lat: 37.772, lng: -122.214},
+		    map: map,
+		    title: 'Current location'
+		  });
+	  
+	  marker.addListener('click', function() {
+		    infowindow.open(map, marker);
+		  });
+	  
+	  var flightPlanCoordinates = [
+         {lat: 37.772, lng: -122.214},
+         {lat: 21.291, lng: -157.821},
+         {lat: -18.142, lng: 178.431},
+         {lat: -27.467, lng: 153.027}
+       ];
+       var flightPath = new google.maps.Polyline({
+         path: flightPlanCoordinates,
+         geodesic: true,
+         strokeColor: '#FF0000',
+         strokeOpacity: 1.0,
+         strokeWeight: 2
+       });
 
+       flightPath.setMap(map);
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </head>
 
 <body>
@@ -164,102 +210,28 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-bar-chart-o fa-fw"></i> My Jobs
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
-                            </div>
-                            <!-- /.row -->
+                            	<table>
+                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
+                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
+                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
+                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
+                            	</table>                            
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Truck Location
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            	<table>
+                            	<tr><td>
+								<div id="googleMap" style="width:600px;height:380px;"></div>
+                            	</td></tr>
+                            	</table>                            
                         </div>
                         <!-- /.panel-body -->
                     </div>

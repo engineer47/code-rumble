@@ -4,12 +4,15 @@ from django.contrib.auth.models import User
 import hashlib
 from code_rumble.apps.main.choices import SENDING_METHODS
 
+from .company import Company
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     mobile = models.CharField(max_length=10)
     validated = models.BooleanField(default=False)
     account = models.CharField(max_length=10)
+    company = models.ForeignKey(Company, null=True)
 
     def create_job(self, options):
         Job = models.get_model('main', 'Job')
