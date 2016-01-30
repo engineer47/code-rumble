@@ -3,11 +3,11 @@ from django.core.files.images import get_image_dimensions
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.html import strip_tags
+
+
 from .models import UserProfile
 from ..main.custom_form_fields import SubmitButtonField
-
-ACCOUNT_TYPE = (('shipper', 'Shipper'),
-                ('individual', 'individual'))
+from .choices import ACCOUNT_TYPE
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Email'}))
