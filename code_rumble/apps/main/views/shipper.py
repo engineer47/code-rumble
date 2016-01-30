@@ -24,6 +24,11 @@ class Shipper(BaseDashboard):
         notifications = 'Notifications.objects.all()'
         public_jobs = Job.objects.filter(job_status__in=[NEW])
         my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
+        if request.GET.get('job_type') == 'available_jobs':
+            self.template_name = "shipper_available_jobs.html"
+        else:
+            self.template_name = "shipper.html"
+
         truck_plan_coordinates = [
             [-24.619168, 25.934612],
             [-24.378842, 26.062498],
