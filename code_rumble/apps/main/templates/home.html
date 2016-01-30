@@ -18,7 +18,7 @@
 {% endif %}
 <img src="{{ STATIC_URL}}gfx/x.jpg">
 <div class="panel right">
-    <h1>New to Leo?</h1>
+    <h1>Sign Up</h1>
     <p>
         <form action="/signup" method="post">{% csrf_token %}
             {% for field in user_form %}
