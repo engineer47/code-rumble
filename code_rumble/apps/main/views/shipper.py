@@ -9,6 +9,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from .base_dashboard import BaseDashboard
 
+from ..models import Job
+from ..constants import NEW, IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED
+
 
 class Shipper(BaseDashboard):
 
@@ -20,11 +23,15 @@ class Shipper(BaseDashboard):
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
         print request.GET.get('job_type')
-        if request.GET.get('job_type') == 'available_jobs':
-            self.template_name = "shipper_available_jobs.html"
+        public_jobs = Job.objects.filter(job_status__in=[NEW])
+        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
+#         if request.GET.get('job_type') == 'available_jobs':
+#             self.template_name = "shipper_available_jobs.html"
         self.context.update({
             'title': self.title,
             'notifications': notifications,
+            'public_jobs': public_jobs,
+            'my_jobs': my_jobs
         })
         return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 

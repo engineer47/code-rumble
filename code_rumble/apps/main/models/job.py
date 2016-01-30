@@ -26,6 +26,20 @@ class Job(models.Model):
         editable=False
     )
 
+    starting_point = models.CharField(
+        verbose_name='Starting Point',
+        max_length=10,
+        null=True,
+        blank=True
+    )
+
+    destination = models.CharField(
+        verbose_name='destination',
+        max_length=10,
+        null=True,
+        blank=True
+    )
+
     job_status = models.CharField(
         verbose_name='Job Status',
         max_length=10,

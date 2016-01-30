@@ -158,44 +158,34 @@
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
-					        <th>Location</th>
+					        <th>Starting Point</th>
 					        <th>Destination</th>
-					        <th> Bid</th>
+					        <th>Bid</th>
 					        <th>Submit</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      	<tr>
-					        <td>John</td>
-					        <td>Doe</td>
-					        <td>john@example.com</td>
-					        <td><button class="btn btn-primary" type="submit">Add</button></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
-					      </tr>
-					      	<tr>
-					        <td>John</td>
-					        <td>Doe</td>
-					        <td id="example_com">john@example.com</td>
-					        <td><button class="btn btn-primary" type="submit">Add</button></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
-					      </tr>
+					    	{% for job in my_jobs %}
+						       <tr>
+						        <td>{{job.cargo_type}}</td>
+						        <td>{{job.starting_point}}</td>
+						        <td>{{destination}}</td>
+						        <td><button class="btn btn-primary" type="submit">Add</button></td>
+						        <td>Accepted</td>
+						        <td>
+								<select name="select_action" id="select_action">
+									{% if job.job_status == 'assigned' %}
+									  <option value="accept">Accept</option>
+									  <option value="reject">Reject</option>									  
+									{% elif job.job_status == 'accepted' %}
+									  <option value="in_progress">In Progress</option>
+									{% elif job.job_status == 'in_progress' %}
+									  <option value="completed">Completed</option>
+									{% endif %}
+								</select>
+								</td>
+							{% endfor %}
 					    </tbody>
 					  </table>
 				<!-- </div> -->                  
