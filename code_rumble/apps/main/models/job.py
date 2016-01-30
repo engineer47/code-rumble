@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from .payment import Payment
 from .user_profile import UserProfile
 
-from ..constants import NEW, INDIVIDUAL, SHIPPER, IN_PROGRESS
+from ..constants import NEW, INDIVIDUAL, SHIPPER, ASSIGNED
 from ..choices import JOB_STATUS
 
 
@@ -54,7 +54,7 @@ class Job(models.Model):
     def assign_job(self, exercutor):
         if exercutor.account == SHIPPER:
             self.exercutor = exercutor
-            self.job_status = IN_PROGRESS
+            self.job_status = ASSIGNED
             self.save()
         else:
             raise ValidationError('Only SHIPPER accounts can exercute jobs. This is a "{}" account'.format(INDIVIDUAL))
