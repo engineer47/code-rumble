@@ -10,7 +10,7 @@ from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from ..forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
-from code_rumble.apps.main.models.user_profile.py import UserProfile
+from ..models import UserProfile
 
 def get_latest(user):
     try:
