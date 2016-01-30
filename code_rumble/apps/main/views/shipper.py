@@ -4,18 +4,24 @@ from django.views.generic import View
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http.response import HttpResponse
-from .job_datatable_view import JobDatatableView
+
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from .base_dashboard import BaseDashboard
 
 
-class Shipper(View):
+class Shipper(BaseDashboard):
 
     def __init__(self):
         self.context = {}
         self.template_name = 'shipper.html'
-        self.title = 'This is Home'
+        super(Shipper, self).__init__()
 
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
+        print request.GET.get('job_type')
+        if request.GET.get('job_type') == 'available_jobs':
+            self.template_name = "shipper_available_jobs.html"
         self.context.update({
             'title': self.title,
             'notifications': notifications,

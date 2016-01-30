@@ -1,3 +1,8 @@
 NEW = 'new'
 IN_PROGRESS = 'in_progess'
 DELIVERED = 'delivered'
+SHIPPER = 'shipper'
+INDIVIDUAL = 'individual'
+UNDER_CONSIDERATION = 'under_consideration'
+REJECTED = 'rejected'
+ACCEPTED = 'accepted'

@@ -23,8 +23,16 @@ class Notification(models.Model):
         unique=True,
     )
 
+    subject = models.CharField(
+        verbose_name='Subject',
+        max_length=25,
+    )
+
     message = models.CharField(
         verbose_name='Message: ',
         max_length=5000,
-        unique=True,
     )
+
+    class Meta:
+        app_label = 'main'
+

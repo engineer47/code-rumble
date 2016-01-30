@@ -90,9 +90,11 @@
 </head>
 
 <body>
-	<form name="my_available_jobs_form" id="my_available_jobs_form" action="{% url 'shipper_url' %}" method="GET">
-  		<input type="hidden" name="job_type" id="job_type" value="available_jobs">
+
+	<form name="my_jobs_form" id="my_jobs_form" action="{% url 'shipper_url' %}" method="GET">
+  		<input type="text" name="job_type" id="job_type" value="my_jobs">
 	</form>
+
     <div id="wrapper">
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -163,15 +165,14 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">My Jobs</h1>
+                    <h1 class="page-header">Available Jobs</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <!--  --> <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary" id="my_jobs" name="my_jobs">
-                       
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary" id="my_available_jobs" name="my_available_jobs" onclick="submit_my_jobs()">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-9 text-right">
@@ -179,7 +180,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Jobs</span>
@@ -187,10 +187,9 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
-                        
                     </div>
-                </div> 
-                <div class="col-lg-3 col-md-6" id="available_jobs" name="available_jobs" onclick="submit_available_jobs()">
+                </div>
+                <div class="col-lg-3 col-md-6" id="available_jobs" name="available_jobs">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -201,14 +200,14 @@
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">View Jobs</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
-
+                
             </div>
             <!-- /.row -->
             <div class="row">
@@ -224,44 +223,22 @@
 					  <table class="table">
 					    <thead>
 					      <tr>
-					        <th>Cargo Type</th>
+				      <tr>
+					        <th>Cargo Details</th>
 					        <th>Location</th>
 					        <th>Destination</th>
-					        <th>Submit Bid</th>
+					        <th>Distance</th>
 					        <th>Status</th>
-					        <th>Action</th>
+					      </tr>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      	<tr>
+					      <tr>
 					        <td>John</td>
 					        <td>Doe</td>
 					        <td>john@example.com</td>
-					        <td><input type="button" class="btn-default" name="submit_bid">submit</input></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
-					      </tr>
-					      	<tr>
-					        <td>John</td>
 					        <td>Doe</td>
 					        <td>john@example.com</td>
-					        <td><input type="button" name="submit_bid">submit</input></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
 					      </tr>
 					    </tbody>
 					  </table>

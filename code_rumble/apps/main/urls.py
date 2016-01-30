@@ -2,12 +2,15 @@ from django.conf.urls import patterns, url
 
 from code_rumble.apps.main.views.user_login import (user_profile, users, index, login_view, signup, logout_view,
                                                     verify_account)
+
 from code_rumble.apps.main.views import Shipper, create_get
+
+from .views import Home
 
 
 urlpatterns = patterns(
     '',
-    url(r'^$', index),
+    url(r'^$', Home.as_view(), name='home_url'),
     url(r'^login$', login_view),
     url(r'^logout$', logout_view),
     url(r'^signup$', signup),
