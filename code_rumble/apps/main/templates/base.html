@@ -57,11 +57,20 @@
                        <a href="{% url 'home_url' %}"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                    </li>
                    {% if user.is_authenticated %}
-	                  <li>
-	                      <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> My Profile</a>
-	                  </li>
-	               {% endif %}
-                   <li>
+	               <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> My Profile<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="flot.html">Personal Details</a>
+                            </li>
+                            <li>
+                                <a href="morris.html">Bank Account details</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    {% endif %}
+                    <li>
                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Contact Us</a>
                    </li>
                    <li>
@@ -74,9 +83,11 @@
        <!-- /.navbar-static-side -->
        <div class="login">
        {% block login %}
+       {% if user.is_authenticated %}
        <form action="/logout">
            <input type="submit" id="btnLogOut" value="Log Out">
        </form>
+       {% endif %}
        {% endblock %}
        </div>
    

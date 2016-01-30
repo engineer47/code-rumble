@@ -46,7 +46,6 @@ def users(request, username="", ribbit_form=None):
 @login_required
 def user_profile(request, username=None):
     user_profile = UserProfile.objects.get(user=request.user)
-    my_people = user_profile.linked_to.through.objects.all()
     #my_people = []
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -67,9 +66,9 @@ def user_profile(request, username=None):
                 if key.find('car') != -1:
                     updated_vehicles.append(value)
             # release all vehicles previously attached to this profile
-            Vehicle.objects.filter(owner=user_profile).update(owner=None)
+            #Vehicle.objects.filter(owner=user_profile).update(owner=None)
             # attach the updated list of vehicles to this profile
-            Vehicle.objects.filter(model__in=updated_vehicles).update(owner=user_profile)
+            #Vehicle.objects.filter(model__in=updated_vehicles).update(owner=user_profile)
 
             # TODO: search People by omang-ID not firstname and lastname.
             updated_people = []
@@ -83,12 +82,10 @@ def user_profile(request, username=None):
                 first_name, surname = name.split('.')
                 named_user = UserProfile.objects.get(user__first_name=first_name, user__last_name=surname)
                 user_profile.linked_to.add(named_user)
-            my_people = user_profile.linked_to.through.objects.all()
             return HttpResponseRedirect('/user_profile/{}/'.format(form.cleaned_data.get('username')))
     else:
         #user = request.GET.get('username')
-        print request.GET
-        user_profile = UserProfile.objects.get(user__username=username)
+        user_profile = UserProfile.objects.get(user=request.user)
         form_values = {}
         for fld in UserProfileForm.Meta.fields:
             form_values[fld] = user_profile.user.__dict__[fld]
@@ -96,16 +93,9 @@ def user_profile(request, username=None):
             form_values[fld] = user_profile.__dict__[fld]
         form = UserProfileForm(form_values)
 
-    return render(request, 
-                  'profiles.html', 
-                  {'form': form,
-                   'vehicles': Vehicle.objects.all(),
-                   'my_vehicles': Vehicle.objects.filter(owner=user_profile),
-                   'people': UserProfile.objects.all().exclude(user__username=request.user.username).exclude(
-                                                               user__in=my_people),
-                   'my_people': my_people,
-                   'username': request.user.username, })
-
+    return render(request,
+                  'user_profile.html',
+                  {'form': form, })
 
 # def vehicle_lov(request):
 #     return render(request, 
@@ -180,7 +170,6 @@ def index(request, auth_form=None, user_form=None):
                       'buddies.html',
                       {#'ribbit_form': ribbit_form, 
                        'user': user,
-                       #'ribbits': ribbits,
                        'model': model,
                        'registration': [],
                        'sighting_type': [],
@@ -203,7 +192,7 @@ def login_view(request):
         if form.is_valid() and UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True):
             login(request, form.get_user())
             # Success
-            return redirect('/')
+            return redirect('/shipper')
         else:
             # Failure
             return index(request, auth_form=form)
@@ -218,7 +207,7 @@ def logout_view(request):
 def verify_account(request, username):
     try:
         user_profile = UserProfile.objects.get(user__username=username)
-        user_profile.validate = True
+        user_profile.validated = True
         user_profile.save()
         message = "Congratulations '{}', your account has been verified.".format(user_profile.user.first_name)
     except UserProfile.DoesNotExist:
@@ -233,11 +222,9 @@ def signup(request):
     if request.method == 'POST':
         if user_form.is_valid():
             username = user_form.clean_username()
-            password = user_form.clean_password2()
             with transaction.atomic():
                 user_form.save()
-                user = authenticate(username=username, password=password)
-                login(request, user)
+                user = user_form.instance
                 form_values = {}
                 for fld in UserCreateForm.Meta.profile_fields:
                     form_values[fld] = user_form.cleaned_data[fld]
