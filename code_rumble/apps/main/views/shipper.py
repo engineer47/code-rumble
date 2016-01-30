@@ -11,8 +11,10 @@ class Shipper(View):
         self.title = 'This is Home'
 
     def get(self, request, *args, **kwargs):
+        notifications = Notifications.objects.all()
         self.context.update({
             'title': self.title,
+            'notifications': notifications,
         })
         return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 
