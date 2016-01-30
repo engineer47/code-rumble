@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 
 from code_rumble.apps.main.views.user_login import (user_profile, users, index, login_view, signup, logout_view,
                                                     verify_account)
-from code_rumble.apps.main.views import Shipper
+from code_rumble.apps.main.views import Shipper, create_get
+
 
 urlpatterns = patterns(
     '',
@@ -16,6 +17,7 @@ urlpatterns = patterns(
     url(r'^user_profile/(?P<username>\w{0,30})/$', user_profile),
     url(r'^user_profile/$', user_profile),
     url(r'shipper$', Shipper.as_view(), name='shipper_url'),
+    url(r'job', create_get, name='job_url'),
 )
 
 urlpatterns += patterns(

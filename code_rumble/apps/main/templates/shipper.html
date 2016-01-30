@@ -15,7 +15,9 @@
     <script src="{{ STATIC_URL }}less.js"></script>
     <script src="{{ STATIC_URL }}jquery-1.11.3.js"></script>
     <script src="{{ STATIC_URL }}thickbox.js"></script>
+    <script src="{{ STATIC_URL }}ajax_form.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
+    
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" type="text/css" media="screen" />
@@ -113,7 +115,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a id="post-text" name="post-text" href="flot.html">Flot Chartss</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Morris.js Charts</a>
@@ -168,7 +170,7 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary" id="my_jobs" name="my_jobs" onclick="create_post()">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-9 text-right">
@@ -185,7 +187,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6" id="available_jobs" name="available_jobs" onclick="create_post()">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -203,6 +205,7 @@
                         </a>
                     </div>
                 </div>
+                
             </div>
             <!-- /.row -->
             <div class="row">
@@ -214,12 +217,49 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            	<table>
-                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
-                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
-                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
-                            	<tr><td>dfgfgsf</td><td>dddddd</td></tr>
-                            	</table>                            
+					<!-- <div class="container"> -->         
+					  <table class="table">
+					    <thead>
+					      <tr>
+					        <th>Firstname</th>
+					        <th>Lastname</th>
+					        <th>Email</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>John</td>
+					        <td>Doe</td>
+					        <td>john@example.com</td>
+					      </tr>
+					      <tr>
+					        <td>Mary</td>
+					        <td>Moe</td>
+					        <td>mary@example.com</td>
+					      </tr>
+					      <tr>
+					        <td>July</td>
+					        <td>Dooley</td>
+					        <td>july@example.com</td>
+					      </tr>
+				      	<tr>
+					        <td>John</td>
+					        <td>Doe</td>
+					        <td>john@example.com</td>
+					      </tr>
+					      <tr>
+					        <td>Mary</td>
+					        <td>Moe</td>
+					        <td>mary@example.com</td>
+					      </tr>
+					      <tr>
+					        <td>July</td>
+					        <td>Dooley</td>
+					        <td>july@example.com</td>
+					      </tr>
+					    </tbody>
+					  </table>
+				<!-- </div> -->                  
                         </div>
                         <!-- /.panel-body -->
                         <div class="panel-heading">
