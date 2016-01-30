@@ -44,11 +44,11 @@ class AuthenticateForm(AuthenticationForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    email = forms.EmailField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Email'}))
-    first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'First Name'}))
-    last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Last Name'}))
-    mobile = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={'placeholder': 'mobile number'}))
-    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Username'}))
+    email = forms.EmailField(required=True, widget=forms.widgets.TextInput(attrs={'readonly': 'Email'}))
+    first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'readonly': 'First Name'}))
+    last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'readonly': 'Last Name'}))
+    mobile = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={'readonly': 'mobile number'}))
+    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'readonly': 'Username'}))
     submit_button = SubmitButtonField(label='Save', initial="Save")
 #     password1 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
 #     password2 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password Confirmation'}))
