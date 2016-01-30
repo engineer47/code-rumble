@@ -3,8 +3,8 @@ from django.core.files.images import get_image_dimensions
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.html import strip_tags
-from apps.models import UserProfile
-from apps.custom_form_fields import SubmitButtonField
+from ..main.models import UserProfile
+from ..main.custom_form_fields import SubmitButtonField
 
 
 class UserCreateForm(UserCreationForm):

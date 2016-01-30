@@ -15,7 +15,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1).child('etc')
+PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc')
 
 DATABASES = {
     'default': {
