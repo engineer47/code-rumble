@@ -1,6 +1,6 @@
 from django.db import models
 
-from .payment import Payment
+# from .payment import Payment
 
 
 class Job(models.Model):
@@ -8,7 +8,7 @@ class Job(models.Model):
     """
     This model describes the job and its details.
     """
-    payment = models.ForeignKey(Payment)
+#     payment = models.ForeignKey(Payment)
 
     name = models.CharField(
         verbose_name='Name',
