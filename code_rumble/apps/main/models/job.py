@@ -6,7 +6,7 @@ from .payment import Payment
 from .user_profile import UserProfile
 
 from ..constants import NEW, INDIVIDUAL, SHIPPER, IN_PROGRESS
-from ..choices import JOB_STATUS
+from ..choices import JOB_STATUS, CARGO_TYPE
 
 
 class Job(models.Model):
@@ -51,13 +51,21 @@ class Job(models.Model):
         blank=True
     )
 
+    cargo_type = models.CharField(
+        verbose_name='Type of Cargo',
+        max_length=25,
+        choices=CARGO_TYPE,
+        null=True,
+        blank=True
+    )
+
     def assign_job(self, exercutor):
         if exercutor.account == SHIPPER:
             self.exercutor = exercutor
             self.job_status = IN_PROGRESS
             self.save()
         else:
-            raise ValidationError('Only SHIPPER accounts can exercute jobs. This is a "{}" account'.format(INDIVIDUAL))
+            raise ValidationError('Only SHIPPER accounts can execute jobs. This is a "{}" account'.format(INDIVIDUAL))
 
     def save(self, *args, **kwargs):
         if not self.id:
