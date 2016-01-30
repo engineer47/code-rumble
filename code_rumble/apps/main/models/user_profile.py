@@ -11,6 +11,13 @@ class UserProfile(models.Model):
     validated = models.BooleanField(default=False)
     account = models.CharField(max_length=10)
 
+    def create_job(self, options):
+        Job = models.get_model('main', 'Job')
+        try:
+            Job.objects.get(sumbittor=self)
+        except Job.DoesNotExist:
+            Job.objects.create(sumbittor=self, **options)
+
     def gravatar_url(self):
         return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
 

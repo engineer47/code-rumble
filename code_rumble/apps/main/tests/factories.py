@@ -14,8 +14,8 @@ class UserFactory(factory.DjangoModelFactory):
     first_name = 'system'
     last_name = 'admin'
     username = 'django'
-    password1 = '1'
-    password2 = '1'
+#     password1 = '1'
+#     password2 = '1'
 
 
 class UserProfileFactory(factory.DjangoModelFactory):

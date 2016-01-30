@@ -1,12 +1,12 @@
 from django.test.testcases import TestCase
 
 from ..models import Job
-from ..constans import NEW
+from ..constants import NEW
 from ..choices import ACCOUNT_TYPE
 from .factories import UserProfileFactory
 
 
-class TestConfiguration(TestCase):
+class TestJobManagement(TestCase):
 
     def setUp(self):
         pass
@@ -15,5 +15,5 @@ class TestConfiguration(TestCase):
         individual = UserProfileFactory(account=ACCOUNT_TYPE[0][1])
         job_options = {}
         individual.create_job(job_options)
-        self.assertEqual(Job.objects.filter(sumbittor__user__user_name=individual.user.username,
-                                            job_status=NEW))
+        self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
+                                            job_status=NEW).count(), 1)
