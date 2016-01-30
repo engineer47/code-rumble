@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from code_rumble.apps.main.views.user_login import (user_profile, users, index, login_view, signup, logout_view,
+from code_rumble.apps.main.views.user_login import (user_profile, users, login_view, signup, logout_view,
                                                     verify_account)
 
 from code_rumble.apps.main.views import Shipper, create_get

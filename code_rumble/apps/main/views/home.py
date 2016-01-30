@@ -35,7 +35,7 @@ class Home(BaseDashboard):
                 'title': self.title,
                 'notifications': notifications,
                 'auth_form': auth_form,
-                'user_form': user_form
+                'user_form': user_form,
             })
         return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 

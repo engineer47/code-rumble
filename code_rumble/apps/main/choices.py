@@ -4,7 +4,7 @@ SENDING_METHODS = (
 )
 
 ACCOUNT_TYPE = (('shipper', 'Shipper'),
-                ('individual', 'individual'))
+                ('individual', 'I    ndividual'))
 
 JOB_STATUS = (('new', 'new'),
               ('in_progess', 'In Progress'),
@@ -43,4 +43,11 @@ BANK = (
     ('baclays_bank', 'Baclays Bank'),
     ('western_union', 'Western Union'),
     ('pay_pal', 'Pay Pal'),
+)
+
+CARGO_TYPE = (
+    ('harzard', 'Harzardous Material'),
+    ('preshable', 'Perishables'),
+    ('fragile', 'Fragile'),
+    ('mechanical', 'Mechanical'),
 )
