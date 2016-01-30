@@ -13,7 +13,7 @@ class UserFactory(factory.DjangoModelFactory):
     email = 'admin@gmail.com'
     first_name = 'system'
     last_name = 'admin'
-    username = 'django'
+    username = factory.Sequence(lambda n: 'django{0}'.format(n))
 #     password1 = '1'
 #     password2 = '1'
 

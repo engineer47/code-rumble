@@ -1,10 +1,11 @@
 import uuid
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from .payment import Payment
 from .user_profile import UserProfile
 
-from ..constants import NEW
+from ..constants import NEW, INDIVIDUAL, SHIPPER, IN_PROGRESS
 from ..choices import JOB_STATUS
 
 
@@ -16,7 +17,9 @@ class Job(models.Model):
 
     payment = models.ForeignKey(Payment, null=True)
 
-    sumbittor = models.ForeignKey(UserProfile)
+    sumbittor = models.ForeignKey(UserProfile, related_name='profile_sumbittor')
+
+    exercutor = models.ForeignKey(UserProfile, null=True)
 
     job_identifier = models.CharField(
         verbose_name='Job Identifier',
@@ -47,6 +50,14 @@ class Job(models.Model):
         null=True,
         blank=True
     )
+
+    def assign_job(self, exercutor):
+        if exercutor.account == SHIPPER:
+            self.exercutor = exercutor
+            self.job_status = IN_PROGRESS
+            self.save()
+        else:
+            raise ValidationError('Only SHIPPER accounts can exercute jobs. This is a "{}" account'.format(INDIVIDUAL))
 
     def save(self, *args, **kwargs):
         if not self.id:
