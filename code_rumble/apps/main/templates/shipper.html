@@ -88,9 +88,9 @@
 </head>
 
 <body>
-	<form name="my_available_jobs_form" id="my_available_jobs_form" action="{% url 'shipper_url' %}" method="GET">
+	<!-- <form name="my_available_jobs_form" id="my_available_jobs_form" action="{% url 'shipper_url' %}" method="GET">
   		<input type="hidden" name="job_type" id="job_type" value="available_jobs">
-	</form>
+	</form> -->
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -152,48 +152,41 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 					<!-- <div class="container"> -->         
-					  <table class="table">
+					  <table class="table" id="job_table" name="job_table">
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
-					        <th>Location</th>
+					        <th>Starting Point</th>
 					        <th>Destination</th>
-					        <th>Submit Bid</th>
-					        <th>Status</th>
+					        <th>Bid</th>
+					        <th>Submit</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      	<tr>
-					        <td>John</td>
-					        <td>Doe</td>
-					        <td>john@example.com</td>
-					        <td><input type="button" class="btn-default" name="submit_bid">submit</input></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
-					      </tr>
-					      	<tr>
-					        <td>John</td>
-					        <td>Doe</td>
-					        <td>john@example.com</td>
-					        <td><input type="button" name="submit_bid">submit</input></td>
-					        <td>Accepted</td>
-					        <td>
-<select name="select_action" id="select_action">
-  <option value="accept">Accept</option>
-  <option value="reject">Reject</option>
-  <option value="in_progress">In Progress</option>
-   <option value="delivered">Delivered</option>
-</select>
-</td>
-					      </tr>
+					    	{% for job in my_jobs %}
+						       <tr>
+		<form name="form1" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
+  			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
+		</form>
+						        <td>{{job.cargo_type}} </td>
+						        <td>{{job.starting_point}}</td>
+						        <td>{{destination}}</td>
+						        <td><button class="btn btn-primary" type="submit">Add</button></td>
+						        <td>Accepted</td>
+						        <td>
+								<select name="select_action" id="select_action">
+									{% if job.job_status == 'assigned' %}
+									  <option value="accept">Accept</option>
+									  <option value="reject">Reject</option>									  
+									{% elif job.job_status == 'accepted' %}
+									  <option value="in_progress">In Progress</option>
+									{% elif job.job_status == 'in_progress' %}
+									  <option value="completed">Completed</option>
+									{% endif %}
+								</select>
+								</td>
+							{% endfor %}
 					    </tbody>
 					  </table>
 				<!-- </div> -->                  
@@ -222,53 +215,15 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                        {% for bidder in biddings %}
                             <div class="list-group">
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                    <i class="fa fa-comment fa-fw"></i> {{bidder.bid_owner.user.first_name}} {{bidder.bid_owner.user.last_name}}
+                                    <span class="pull-right text-muted small"><em>{{bidder.bidding_amount}}</em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                                    <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                                    <span class="pull-right text-muted small"><em>10:57 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                                    <span class="pull-right text-muted small"><em>9:49 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Payment Received
-                                    <span class="pull-right text-muted small"><em>Yesterday</em>
-                                    </span>
-                                </a>
-                            </div>
+                              </div>
+                         {% endfor %}
                             <!-- /.list-group -->
                             <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                         </div>

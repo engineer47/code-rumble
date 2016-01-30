@@ -9,6 +9,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from .base_dashboard import BaseDashboard
 
+from ..models import Job
+from ..constants import NEW, IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED
+
 
 class Shipper(BaseDashboard):
 
@@ -19,6 +22,8 @@ class Shipper(BaseDashboard):
 
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
+        public_jobs = Job.objects.filter(job_status__in=[NEW])
+        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
         truck_plan_coordinates = [
             [-24.619168, 25.934612],
             [-24.378842, 26.062498],
@@ -29,11 +34,11 @@ class Shipper(BaseDashboard):
             [-21.179817, 27.510579]
         ]
         destination = [-21.179817, 27.510579]
-        if request.GET.get('job_type') == 'available_jobs':
-            self.template_name = "shipper_available_jobs.html"
         self.context.update({
             'title': self.title,
             'notifications': notifications,
+            'public_jobs': public_jobs,
+            'my_jobs': my_jobs,
             'truck_plan_coordinates': truck_plan_coordinates,
             'coordinates_list_len': len(truck_plan_coordinates),
             'destination': destination,
@@ -54,7 +59,6 @@ def create_get(request):
     if request.method == 'GET':
         post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
-        print "Ihfdashfdsajkgfakgfasgkfkg", request.GET
 
 #         post = Post(text=post_text, author=request.user)
 #         post.save()
