@@ -49,52 +49,44 @@
     <script src="{{ STATIC_URL }}thickbox.js"></script>
 </head>
 <body>
-    <header>
-        <div class="wrapper">
-            <!--<img src="{{ STATIC_URL }}gfx/logo.png">
-            <span>Twitter Clone</span>-->
-            {% block login %}
-            <a href="/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <!--<a href="/users/">Public Users</a>-->
-            <a href="/user_profile/{{ username }}">My Profile</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/footprint/">Foot Print</a>
-            <form action="/logout">
-                <input type="submit" id="btnLogOut" value="Log Out">
-            </form>
-            {% endblock %}
-        </div>
-    </header>
-    <div id="1">
-        <div class="wrapper1">
-            {% block flash %}
-            {% if auth_form.non_field_errors or user_form.non_field_errors or ribbit_form.errors %}
-            <div class="flash error">
-                {{ auth_form.non_field_errors }}
-                {{ user_form.non_field_errors }}
-            </div>
-            {% endif %}
-            {% if notice %}
-            <div class="flash notice">
-                {{ notice }}
-            </div>
-            {% endif %}
-            {% endblock %}
+
+       <div class="navbar-default sidebar" role="navigation">
+           <div class="sidebar-nav navbar-collapse">
+               <ul class="nav" id="side-menu">
+                   <li>
+                       <a href="{% url 'home_url' %}"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                   </li>
+                   {% if user.is_authenticated %}
+	                  <li>
+	                      <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> My Profile</a>
+	                  </li>
+	               {% endif %}
+                   <li>
+                       <a href="tables.html"><i class="fa fa-table fa-fw"></i> Contact Us</a>
+                   </li>
+                   <li>
+                       <a href="forms.html"><i class="fa fa-edit fa-fw"></i> About Us</a>
+                   </li>
+               </ul>
+           </div>
+           <!-- /.sidebar-collapse -->
+       </div>
+       <!-- /.navbar-static-side -->
+       <div class="login">
+       {% block login %}
+       <form action="/logout">
+           <input type="submit" id="btnLogOut" value="Log Out">
+       </form>
+       {% endblock %}
+       </div>
+   
  
-            {% block content %}
- 
-            {% endblock %}
-        </div>
-    </div>
-    <footer>
-        <div class="wrapper">
-        	Copyright Code Rumble &copy 2016
-            <!-- <a href="http://net.tutsplus.com">
-                <img src="{{ STATIC_URL }}gfx/logo-nettuts.png">
-            </a>-->
-            <a href="http://www.djangoproject.com/">
-                <img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." />
-            </a>
-        </div>
-    </footer>
+{% block content %} 
+{% endblock %}
+   
+ {% block footer %}
+<div id="footer">
+© Copyright 2016 Code Rumble &copy 2016. All Rights Reserved.
+{% endblock footer %}
 </body>
 </html>

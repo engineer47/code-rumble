@@ -1,31 +1,61 @@
 {% extends "base.html" %}
  
+ <div class="login">
 {% block login %}
+	<table>
     <form action="/login" method="post">{% csrf_token %}
+    	<tr>
         {% for field in auth_form %}
-        {{ field }}
+        <td style="margin:5px; background-color:red;">{{ field }} </td>
         {% endfor %}
-        <input type="submit" id="btnLogIn" value="Log In">
+        <td><input type="submit" id="btnLogIn" value="Log In"></td>
+        </tr>
     </form>
-{% endblock %}
- 
-{% block content %}
-{% if auth_form.non_field_errors or user_form.non_field_errors %}
-<div class="flash error">
-    {{ auth_form.non_field_errors }}
-    {{ user_form.non_field_errors }}
-</div>
-{% endif %}
-<img src="{{ STATIC_URL}}gfx/x.jpg">
-<div class="panel right">
-    <h1>Sign Up</h1>
-    <p>
+    </table>
+    <h4><b>New to BW Shipping Portal?</b></h4>
+    <table>
         <form action="/signup" method="post">{% csrf_token %}
             {% for field in user_form %}
-            {{ field }}
+            <tr><td>{{ field }}</td></tr>
             {% endfor %}
-            <input type="submit" value="Create Account">
+            <tr><td><input type="submit" value="Create Account"></td></tr>
         </form>
-    </p>
+      </table>
+{% endblock %}
 </div>
+ 
+{% block content %}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 {% endblock %}
