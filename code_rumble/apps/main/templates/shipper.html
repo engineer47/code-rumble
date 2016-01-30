@@ -154,14 +154,14 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 					<!-- <div class="container"> -->         
-					  <table class="table">
+					  <table class="table" id="job_table" name="job_table">
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
 					        <th>Location</th>
 					        <th>Destination</th>
-					        <th>Submit Bid</th>
-					        <th>Status</th>
+					        <th> Bid</th>
+					        <th>Submit</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
@@ -170,7 +170,7 @@
 					        <td>John</td>
 					        <td>Doe</td>
 					        <td>john@example.com</td>
-					        <td><input type="button" class="btn-default" name="submit_bid">submit</input></td>
+					        <td><button class="btn btn-primary" type="submit">Add</button></td>
 					        <td>Accepted</td>
 					        <td>
 <select name="select_action" id="select_action">
@@ -184,8 +184,8 @@
 					      	<tr>
 					        <td>John</td>
 					        <td>Doe</td>
-					        <td>john@example.com</td>
-					        <td><input type="button" name="submit_bid">submit</input></td>
+					        <td id="example_com">john@example.com</td>
+					        <td><button class="btn btn-primary" type="submit">Add</button></td>
 					        <td>Accepted</td>
 					        <td>
 <select name="select_action" id="select_action">
