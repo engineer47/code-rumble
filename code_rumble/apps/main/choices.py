@@ -44,3 +44,10 @@ BANK = (
     ('western_union', 'Western Union'),
     ('pay_pal', 'Pay Pal'),
 )
+
+CARGO_TYPE = (
+    ('harzard', 'Harzardous Material'),
+    ('preshable', 'Perishables'),
+    ('fragile', 'Fragile'),
+    ('mechanical', 'Mechanical'),
+)
