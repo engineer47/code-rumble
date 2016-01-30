@@ -1,5 +1,4 @@
-
-rt json
+import json
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,8 +11,8 @@ from django.db.models import Count, Q
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from apps.forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
-from apps.models import UserProfile
+from ..forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
+from ..models import UserProfile
 
 def get_latest(user):
     try:
@@ -264,53 +263,4 @@ def signup(request):
 #                    'public.html',
 #                    {'ribbit_form': ribbit_form, 'next_url': '/ribbits',
 #                     'ribbits': ribbits, 'username': request.user.username})
-
-# @login_required
-# def footprint(request):
-#     username = request.GET.get('username')
-#     sightings = None
-#     sightings_tuple = []
-#     data = {'values':[]}
-#     if request.method == 'GET':
-#         my_sightings = Sighting.objects.filter(human__user__username=username)
-#         sightings = my_sightings
-#     else:
-#         sighting_type = request.POST.get('type')
-#         if sighting_type == 'vehicle':
-#             sightings = Sighting.objects.filter(vehicle__registration=request.POST.get('registration'))
-#             for st in sightings:
-#                 sightings_tuple.append((st.sighting_datetime.strftime('%d/%b/%Y'),
-#                                         st.infridgement.short_description))
-#             sightings = sightings.values('year_month_slug').annotate(dcount=Count('year_month_slug'))
-#             for index in sightings:
-#                 index['X'] = index.pop('year_month_slug')
-#                 index['Y'] = index.pop('dcount')
-#             data['values'] = sightings
-#         elif sighting_type == 'human':
-#             pass
-#         elif sighting_type == 'infrastructure':
-#             pass
-#         else:
-#             sighting_type = '------'
-#         print str(data)
-#     return render(request,
-#                    'footprint.html',
-#                    {'username': request.user.username,
-#                     'sightings_tuple': sightings_tuple,
-#                     'graph_data': str(data).replace('u\'', '\'').replace('\'', '"')
-#                     })
-# 
-# @login_required
-# def submit(request):
-#     if request.method == "POST":
-#         ribbit_form = LeoForm(data=request.POST)
-#         next_url = request.POST.get("next_url", "/")
-#         if ribbit_form.is_valid():
-#             ribbit = ribbit_form.save(commit=False)
-#             ribbit.user = request.user
-#             ribbit.save()
-#             return redirect(next_url)
-#         else:
-#             return public(request, ribbit_form)
-#     return redirect('/')
 
