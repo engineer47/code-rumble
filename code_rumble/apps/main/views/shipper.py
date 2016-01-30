@@ -25,8 +25,11 @@ class Shipper(BaseDashboard):
         print request.GET.get('job_type')
         public_jobs = Job.objects.filter(job_status__in=[NEW])
         my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
-#         if request.GET.get('job_type') == 'available_jobs':
-#             self.template_name = "shipper_available_jobs.html"
+        if request.GET.get('job_type') == 'available_jobs':
+            self.template_name = "shipper_available_jobs.html"
+        else:
+            self.template_name = "shipper.html"
+
         self.context.update({
             'title': self.title,
             'notifications': notifications,
