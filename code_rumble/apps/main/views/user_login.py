@@ -180,7 +180,6 @@ def index(request, auth_form=None, user_form=None):
                       'buddies.html',
                       {#'ribbit_form': ribbit_form, 
                        'user': user,
-                       #'ribbits': ribbits,
                        'model': model,
                        'registration': [],
                        'sighting_type': [],
@@ -203,7 +202,7 @@ def login_view(request):
         if form.is_valid() and UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True):
             login(request, form.get_user())
             # Success
-            return redirect('/')
+            return redirect('/shipper')
         else:
             # Failure
             return index(request, auth_form=form)
@@ -218,7 +217,7 @@ def logout_view(request):
 def verify_account(request, username):
     try:
         user_profile = UserProfile.objects.get(user__username=username)
-        user_profile.validate = True
+        user_profile.validated = True
         user_profile.save()
         message = "Congratulations '{}', your account has been verified.".format(user_profile.user.first_name)
     except UserProfile.DoesNotExist:
@@ -233,11 +232,9 @@ def signup(request):
     if request.method == 'POST':
         if user_form.is_valid():
             username = user_form.clean_username()
-            password = user_form.clean_password2()
             with transaction.atomic():
                 user_form.save()
-                user = authenticate(username=username, password=password)
-                login(request, user)
+                user = user_form.instance
                 form_values = {}
                 for fld in UserCreateForm.Meta.profile_fields:
                     form_values[fld] = user_form.cleaned_data[fld]
