@@ -49,7 +49,6 @@ def create_get(request):
     if request.method == 'GET':
         post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
-        print "Ihfdashfdsajkgfakgfasgkfkg", request.GET
 
 #         post = Post(text=post_text, author=request.user)
 #         post.save()

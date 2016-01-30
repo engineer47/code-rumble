@@ -2,13 +2,13 @@
 function submit_available_jobs() {
 
     console.log("create post is working!") // sanity check
-  	$("#my_available_jobs_form").submit();
+  	//$("#my_available_jobs_form").submit();
 
 };
 
 // AJAX for posting
 function submit_my_jobs() {
-  	$("#my_jobs_form").submit();
+  	//$("#my_jobs_form").submit();
 
 };
 
@@ -19,13 +19,11 @@ $(document).ready(function() {
         $("tr:even").css("background-color", "white");
         $("tr:odd").css("background-color", "white");
         $(this).css("background-color", "#d3d3d3");
-  
-        var Something = $(this).closest('td').children('1').text();
-        var vaaal = $(this).children().val();
-        alert(vaaal);
+        var index = $(this).index();
+        var name = "#form" + index;
+        alert(name);
+        $(name).submit();
+        $("#my_available_jobs_form").submit();
     } );
- 
-   // $('#button').click( function () {
-   //     alert( table.rows('.selected').data().length +' row(s) selected' );
-    //} );
 } );
+
