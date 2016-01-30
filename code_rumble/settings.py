@@ -15,7 +15,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc')
+PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1).child('etc')
 
 DATABASES = {
     'default': {
@@ -88,7 +88,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'code_rumble.urls'
+ROOT_URLCONF = 'code_rumble.apps.main.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'code_rumble.wsgi.application'
@@ -109,7 +109,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     #'south',
-    'apps',
+    'code_rumble.apps.main',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

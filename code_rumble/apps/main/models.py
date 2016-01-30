@@ -2,7 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 import hashlib
-from choices import SENDING_METHODS
+from code_rumble.apps.main.choices import SENDING_METHODS
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
