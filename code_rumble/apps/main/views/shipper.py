@@ -19,12 +19,24 @@ class Shipper(BaseDashboard):
 
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
-        print request.GET.get('job_type')
+        truck_plan_coordinates = [
+            [-24.619168, 25.934612],
+            [-24.378842, 26.062498],
+            [-24.348581, 26.086359],
+            [-24.025998, 26.317072],
+            [-23.146262, 26.819975],
+            [-21.949307, 27.301839],
+            [-21.179817, 27.510579]
+        ]
+        destination = [-21.179817, 27.510579]
         if request.GET.get('job_type') == 'available_jobs':
             self.template_name = "shipper_available_jobs.html"
         self.context.update({
             'title': self.title,
             'notifications': notifications,
+            'truck_plan_coordinates': truck_plan_coordinates,
+            'coordinates_list_len': len(truck_plan_coordinates),
+            'destination': destination,
         })
         return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 
