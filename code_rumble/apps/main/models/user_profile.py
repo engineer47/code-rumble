@@ -1,9 +1,10 @@
+import hashlib
 from datetime import datetime
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-import hashlib
-from code_rumble.apps.main.choices import SENDING_METHODS
 
+from ..constants import INDIVIDUAL, SHIPPER
 from .company import Company
 
 
@@ -16,10 +17,10 @@ class UserProfile(models.Model):
 
     def create_job(self, options):
         Job = models.get_model('main', 'Job')
-        try:
-            Job.objects.get(sumbittor=self)
-        except Job.DoesNotExist:
+        if self.account == INDIVIDUAL:
             Job.objects.create(sumbittor=self, **options)
+        else:
+            raise ValidationError('Only INDIVIDUAL accounts can sumit jobs. This is a "{}" account'.format(SHIPPER))
 
     def gravatar_url(self):
         return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
