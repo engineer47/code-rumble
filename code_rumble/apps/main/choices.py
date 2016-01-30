@@ -4,7 +4,7 @@ SENDING_METHODS = (
 )
 
 ACCOUNT_TYPE = (('shipper', 'Shipper'),
-                ('individual', 'I    ndividual'))
+                ('individual', 'Individual'))
 
 JOB_STATUS = (('new', 'new'),
               ('in_progess', 'In Progress'),
