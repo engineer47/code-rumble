@@ -17,5 +17,8 @@ class Payment(models.Model):
     amount = models.DecimalField(
         verbose_name='Amount in Pula',
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
     )
+
+    class Meta:
+        app_label = 'main'

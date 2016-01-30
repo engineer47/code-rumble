@@ -2,12 +2,11 @@ import uuid
 from django.db import models
 from django.core.exceptions import ValidationError
 
+from .payment import Payment
 from .user_profile import UserProfile
 
 from ..constants import NEW, INDIVIDUAL, SHIPPER, IN_PROGRESS
 from ..choices import JOB_STATUS
-
-# from .payment import Payment
 
 
 class Job(models.Model):
@@ -16,7 +15,7 @@ class Job(models.Model):
     This model describes the job and its details.
     """
 
-#     payment = models.ForeignKey(Payment, null=True)
+    payment = models.ForeignKey(Payment, null=True)
 
     sumbittor = models.ForeignKey(UserProfile, related_name='profile_sumbittor')
 
