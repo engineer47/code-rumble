@@ -9,8 +9,8 @@ from django.contrib import messages
 from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from .forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
-from .models import UserProfile
+from ..forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
+from ..models import UserProfile
 
 def get_latest(user):
     try:
