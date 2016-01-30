@@ -1,10 +1,13 @@
 import os
+import sys
 from unipath import Path
  
 DEBUG = True
  
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 LOGIN_URL = '/'
+
+BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -17,19 +20,27 @@ MANAGERS = ADMINS
 
 PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc')
 
-DATABASES = {
-    'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'OPTIONS': {
-                'init_command': 'SET storage_engine=INNODB',
-            },
-            'OPTIONS': {
-                'read_default_file': os.path.join(PATH, 'rumble.cnf'),
-            },
-            'HOST': '',
-            'PORT': '',
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         },
-}
+    }
+else:
+    DATABASES = {
+        'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'OPTIONS': {
+                    'init_command': 'SET storage_engine=INNODB',
+                },
+                'OPTIONS': {
+                    'read_default_file': os.path.join(PATH, 'rumble.cnf'),
+                },
+                'HOST': '',
+                'PORT': '',
+            },
+    }
 
 SITE_ID = 1
 
@@ -151,5 +162,5 @@ LOGGING = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
