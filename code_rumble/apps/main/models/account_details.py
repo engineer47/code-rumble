@@ -29,6 +29,7 @@ class AccountDetails(models.Model):
 
     payment_mode = models.CharField(
         verbose_name='Payment mode',
+        max_length=25,
         choices=PAYMENT_MODE,
     )
 
@@ -37,3 +38,6 @@ class AccountDetails(models.Model):
         max_length=25,
         choices=PAYMENT_STATUS,
     )
+
+    class Meta:
+        app_label = 'main'
