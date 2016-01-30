@@ -17,7 +17,7 @@ urlpatterns = patterns(
     url(r'^users/$', users),
     url(r'^verify/(?P<username>\w{0,30})$', verify_account),
     url(r'^users/(?P<username>\w{0,30})/$', users),
-    url(r'^user_profile/(?P<username>\w{0,30})/$', user_profile),
+    url(r'^user_profile/(?P<username>\w{0,30})/$', user_profile, name='user_profile'),
     url(r'^user_profile/$', user_profile),
     url(r'shipper$', Shipper.as_view(), name='shipper_url'),
     url(r'job', create_get, name='job_url'),
