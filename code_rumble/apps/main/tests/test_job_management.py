@@ -1,8 +1,8 @@
 from django.test.testcases import TestCase
 from django.core.exceptions import ValidationError
 
-from ..models import Job
-from ..constants import NEW, IN_PROGRESS, SHIPPER, INDIVIDUAL
+from ..models import Job, Bid
+from ..constants import NEW, IN_PROGRESS, SHIPPER, INDIVIDUAL, UNDER_CONSIDERATION, ACCEPTED, REJECTED
 from .factories import UserProfileFactory
 
 
@@ -35,17 +35,57 @@ class TestJobManagement(TestCase):
             job.assign_job(individual)
 
     def test_multiple_shipper_bids_for_job(self):
-        pass
+        individual = UserProfileFactory(account=INDIVIDUAL)
+        job_options = {}
+        individual.create_job(job_options)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=NEW)
+        exercutor1 = UserProfileFactory(account=SHIPPER)
+        exercutor1.submit_bid(job, 200)
+        self.assertEqual(Bid.objects.filter(job=job, bid_owner=exercutor1,
+                                            bid_status=UNDER_CONSIDERATION, expired=False).count(), 1)
+        exercutor2 = UserProfileFactory(account=SHIPPER)
+        exercutor2.submit_bid(job, 200)
+        self.assertEqual(Bid.objects.filter(job=job, bid_owner=exercutor2,
+                                            bid_status=UNDER_CONSIDERATION, expired=False).count(), 1)
 
     def test_individual_accepts_bid(self):
-        pass
+        individual = UserProfileFactory(account=INDIVIDUAL)
+        job_options = {}
+        individual.create_job(job_options)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=NEW)
+        exercutor1 = UserProfileFactory(account=SHIPPER)
+        exercutor1.submit_bid(job, 200)
+        exercutor2 = UserProfileFactory(account=SHIPPER)
+        exercutor2.submit_bid(job, 200)
+        bid = Bid.objects.get(job=job, bid_owner=exercutor2, status=NEW, expired=False)
+        individual.accept_bid(bid)
+        self.assertEqual(Bid.objects.filter(job=job, bid_owner=exercutor2,
+                                            bid_status=ACCEPTED, expired=False).count(), 1)
 
-    def test_individual_rejects_bid(self):
-        pass
+    def test_unaccepted_bid_automatically_rejected(self):
+        individual = UserProfileFactory(account=INDIVIDUAL)
+        job_options = {}
+        individual.create_job(job_options)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=NEW)
+        exercutor1 = UserProfileFactory(account=SHIPPER)
+        exercutor1.submit_bid(job, 200)
+        exercutor2 = UserProfileFactory(account=SHIPPER)
+        exercutor2.submit_bid(job, 200)
+        exercutor3 = UserProfileFactory(account=SHIPPER)
+        exercutor3.submit_bid(job, 200)
+        bid = Bid.objects.get(job=job, bid_owner=exercutor2, expired=False)
+        individual.accept_bid(bid)
+        self.assertEqual(Bid.objects.filter(job=job, bid_owner=exercutor2,
+                                            bid_status=ACCEPTED, expired=False).count(), 1)
+        for bid_item in Bid.objects.filter(job=job).exclude(bid_status=ACCEPTED):
+            self.assertEqual(bid_item.bid_status, REJECTED)
 
     def test_rejected_bid_cannot_bid_again(self):
         pass
 
     def test_job_in_progress(self):
         pass
-    
+

@@ -247,7 +247,7 @@ def signup(request):
                 body = 'Thank you for registering with BW shipping portal ' \
                         'click the following link to verify your email.' \
                         'http://localhost:8000/verify/{}'.format(user.username)
-                email_sender = "sirpharatlhatlhe@gmail.com"
+                email_sender = "coderumble2016@gmail.com"
                 recipient_list = [user.email, ]
                 send_mail(subject, body, email_sender, recipient_list, fail_silently=False)
                 return redirect('/')
