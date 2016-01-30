@@ -17,26 +17,18 @@ class AccountDetails(models.Model):
         verbose_name='Account Number',
         max_length=25,
         unique=True,
-        null=False,
     )
 
     institution = models.CharField(
         verbose_name='Institution name',
         choices=BANK,
         max_length=25,
-        null=False,
     )
 
     payment_mode = models.CharField(
         verbose_name='Payment mode',
         max_length=25,
         choices=PAYMENT_MODE,
-    )
-
-    payment_status = models.CharField(
-        verbose_name='Payment Status',
-        max_length=25,
-        choices=PAYMENT_STATUS,
     )
 
     class Meta:

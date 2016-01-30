@@ -1,10 +1,10 @@
 from django.test.testcases import TestCase
 from django.core.exceptions import ValidationError
 
-from ..models import Job, Bid
+from ..models import Job, Bid, Payment
 from ..constants import (NEW, IN_PROGRESS, SHIPPER, INDIVIDUAL, UNDER_CONSIDERATION, ACCEPTED, REJECTED,
-                         ASSIGNED, COMPLETED)
-from .factories import UserProfileFactory
+                         ASSIGNED, PENDING, ON_HOLD)
+from .factories import UserProfileFactory, AccountFactory
 
 
 class TestJobManagement(TestCase):
@@ -154,7 +154,41 @@ class TestJobManagement(TestCase):
         with self.assertRaises(ValidationError):
             exercutor1.reject_job(job)
 
-    def test_rejected_bid_cannot_bid_again(self):
-        pass
+    def test_accept_job_and_create_spawn_payment(self):
+        individual = UserProfileFactory(account=INDIVIDUAL)
+        job_options = {}
+        individual.create_job(job_options)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=NEW)
+        exercutor1 = UserProfileFactory(account=SHIPPER)
+        job.assign_job(exercutor1)
+        self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
+                         job_status=ASSIGNED).count(), 1)
+        exercutor1.accept_job(job)
+        self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
+                         job_status=ACCEPTED).count(), 1)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=ACCEPTED)
+        self.assertEqual(Payment.objects.filter(job=job, payment_status=PENDING).count(), 1)
+
+    def test_individual_makes_payment_on_hold(self):
+        individual = UserProfileFactory(account=INDIVIDUAL)
+        job_options = {}
+        individual.create_job(job_options)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=NEW)
+        exercutor1 = UserProfileFactory(account=SHIPPER)
+        job.assign_job(exercutor1)
+        self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
+                         job_status=ASSIGNED).count(), 1)
+        exercutor1.accept_job(job)
+        self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
+                         job_status=ACCEPTED).count(), 1)
+        job = Job.objects.get(sumbittor__user__username=individual.user.username,
+                              job_status=ACCEPTED)
+        account = AccountFactory()
+        job.initiate_payment(400, account.account_number)
+        self.assertEqual(Payment.objects.filter(job=job, payment_status=ON_HOLD).count(), 1)
+
 
 
