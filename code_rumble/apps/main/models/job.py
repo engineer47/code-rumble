@@ -7,7 +7,7 @@ from .user_profile import UserProfile
 from ..constants import NEW
 from ..choices import JOB_STATUS
 
-# from .payment import Payment
+from .payment import Payment
 
 
 class Job(models.Model):
