@@ -6,13 +6,16 @@ from django.utils.html import strip_tags
 from .models import UserProfile
 from ..main.custom_form_fields import SubmitButtonField
 
+ACCOUNT_TYPE = (('shipper', 'Shipper'),
+                ('individual', 'individual'))
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Email'}))
     first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Last Name'}))
-    mobile = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={'placeholder': 'mobile number'}))
+    mobile = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={'placeholder': 'Mobile Number'}))
     username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Username'}))
+    account = forms.ChoiceField(widget=forms.Select, choices=ACCOUNT_TYPE)
     password1 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password Confirmation'}))
 
@@ -24,11 +27,9 @@ class UserCreateForm(UserCreationForm):
         return form
 
     class Meta:
-        fields = ['email', 'username', 'first_name', 'last_name', 'password1',
-                  'password2']
-        profile_fields = ['mobile']
+        fields = ['email', 'username', 'first_name', 'last_name', 'password1', 'password2']
+        profile_fields = ['account', 'mobile']
         model = User
-
 
 class AuthenticateForm(AuthenticationForm):
     username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Username'}))

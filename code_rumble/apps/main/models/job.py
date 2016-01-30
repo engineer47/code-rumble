@@ -13,12 +13,14 @@ class Job(models.Model):
     name = models.CharField(
         verbose_name='Name',
         max_length=25,
-        unique=True,)
+        unique=True,
+    )
 
     weight = models.DecimalField(
         verbose_name='Weight of the Cargo',
         max_digits=6,
-        decimal_places=4)
+        decimal_places=4,
+    )
 
     insurance = models.CharField(
         verbose_name='Insurance',

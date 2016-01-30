@@ -1,16 +1,19 @@
-import json
+
+rt json
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Count, Q
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from ..forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
-from ..models import UserProfile
+from apps.forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
+from apps.models import UserProfile
 
 def get_latest(user):
     try:
@@ -198,7 +201,7 @@ def index(request, auth_form=None, user_form=None):
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticateForm(data=request.POST)
-        if form.is_valid():
+        if form.is_valid() and UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True):
             login(request, form.get_user())
             # Success
             return redirect('/')
@@ -206,11 +209,25 @@ def login_view(request):
             # Failure
             return index(request, auth_form=form)
     return redirect('/')
- 
- 
+
+
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+def verify_account(request, username):
+    try:
+        user_profile = UserProfile.objects.get(user__username=username)
+        user_profile.validate = True
+        user_profile.save()
+        message = "Congratulations '{}', your account has been verified.".format(user_profile.user.first_name)
+    except UserProfile.DoesNotExist:
+        message = "The username '{}' does not exist in the system. Please register first.".format(username)
+    return render(request,
+                    'verify.html',
+                    {'message': message
+                     })
 
 def signup(request):
     user_form = UserCreateForm(data=request.POST)
@@ -218,15 +235,23 @@ def signup(request):
         if user_form.is_valid():
             username = user_form.clean_username()
             password = user_form.clean_password2()
-            user_form.save()
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            form_values = {}
-            for fld in UserCreateForm.Meta.profile_fields:
-                form_values[fld] = user_form.cleaned_data[fld]
-            form_values['user'] = user
-            UserProfile.objects.create(**form_values)
-            return redirect('/')
+            with transaction.atomic():
+                user_form.save()
+                user = authenticate(username=username, password=password)
+                login(request, user)
+                form_values = {}
+                for fld in UserCreateForm.Meta.profile_fields:
+                    form_values[fld] = user_form.cleaned_data[fld]
+                form_values['user'] = user
+                UserProfile.objects.create(**form_values)
+                subject = "verify account (BW shipping portal)"
+                body = 'Thank you for registering with BW shipping portal ' \
+                        'click the following link to verify your email.' \
+                        'http://localhost:8000/verify/{}'.format(user.username)
+                email_sender = "sirpharatlhatlhe@gmail.com"
+                recipient_list = [user.email, ]
+                send_mail(subject, body, email_sender, recipient_list, fail_silently=False)
+                return redirect('/')
         else:
             return index(request, user_form=user_form)
     return redirect('/')
@@ -274,17 +299,18 @@ def signup(request):
 #                     'sightings_tuple': sightings_tuple,
 #                     'graph_data': str(data).replace('u\'', '\'').replace('\'', '"')
 #                     })
+# 
+# @login_required
+# def submit(request):
+#     if request.method == "POST":
+#         ribbit_form = LeoForm(data=request.POST)
+#         next_url = request.POST.get("next_url", "/")
+#         if ribbit_form.is_valid():
+#             ribbit = ribbit_form.save(commit=False)
+#             ribbit.user = request.user
+#             ribbit.save()
+#             return redirect(next_url)
+#         else:
+#             return public(request, ribbit_form)
+#     return redirect('/')
 
-@login_required
-def submit(request):
-    if request.method == "POST":
-        ribbit_form = LeoForm(data=request.POST)
-        next_url = request.POST.get("next_url", "/")
-        if ribbit_form.is_valid():
-            ribbit = ribbit_form.save(commit=False)
-            ribbit.user = request.user
-            ribbit.save()
-            return redirect(next_url)
-        else:
-            return public(request, ribbit_form)
-    return redirect('/')
