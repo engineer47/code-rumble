@@ -11,7 +11,7 @@ class Shipper(View):
         self.title = 'This is Home'
 
     def get(self, request, *args, **kwargs):
-        notifications = Notifications.objects.all()
+        notifications = 'Notifications.objects.all()'
         self.context.update({
             'title': self.title,
             'notifications': notifications,

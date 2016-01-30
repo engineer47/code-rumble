@@ -6,12 +6,15 @@ from .user_profile import UserProfile
 
 from ..choices import JOB_STATUS
 
+# from .payment import Payment
+
 
 class Job(models.Model):
 
     """
     This model describes the job and its details.
     """
+
     payment = models.ForeignKey(Payment, null=True)
 
     sumbittor = models.ForeignKey(UserProfile)
