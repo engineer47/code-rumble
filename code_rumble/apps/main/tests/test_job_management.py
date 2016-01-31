@@ -14,13 +14,13 @@ class TestJobManagement(TestCase):
 
     def test_individual_submit_job(self):
         individual = UserProfileFactory(account=INDIVIDUAL)
-        job_options = {'weight': 300.00}
+        job_options = {'weight': 300.00, }
         individual.create_job(job_options)
         self.assertEqual(Job.objects.filter(sumbittor__user__username=individual.user.username,
                                             job_status=NEW).count(), 1)
         exercutor = UserProfileFactory(account=SHIPPER)
         with self.assertRaises(ValidationError):
-            individual.create_job(exercutor)
+            exercutor.create_job(job_options)
 
     def test_directly_assign_job_to_shipper(self):
         individual = UserProfileFactory(account=INDIVIDUAL)
