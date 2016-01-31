@@ -14,9 +14,9 @@ class Job(models.Model):
     This model describes the job and its details.
     """
 
-    sumbittor = models.ForeignKey(UserProfile, related_name='profile_sumbittor')
+    sumbittor = models.ForeignKey(UserProfile, related_name='profile_sumbittor', editable=False)
 
-    exercutor = models.ForeignKey(UserProfile, null=True)
+    exercutor = models.ForeignKey(UserProfile, null=True, editable=False)
 
     job_identifier = models.CharField(
         verbose_name='Job Identifier',
@@ -45,6 +45,7 @@ class Job(models.Model):
         max_length=10,
         default=NEW,
         choices=JOB_STATUS,
+        editable=False
     )
 
     weight = models.DecimalField(

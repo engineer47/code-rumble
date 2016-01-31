@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from .base_dashboard import BaseDashboard
 
-from ..models import Job
+from ..models import Job, Bid
 from ..forms import JobForm
 from ..constants import NEW, IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED
 from code_rumble.apps.main.models.user_profile import UserProfile
@@ -30,8 +30,7 @@ class GoodsOwner(BaseDashboard):
             self.template_name = 'job_form.html'
         job_form = JobForm()
         my_jobs = Job.objects.filter(sumbittor__user__username=request.user.username)
-#         for job in Job.objects.all():
-#             print job.sumbittor.user.username
+        my_bids = Bid.objects.filter(job__in=my_jobs)
         print request.user.username
         truck_plan_coordinates = [
             [-24.619168, 25.934612],
@@ -47,6 +46,7 @@ class GoodsOwner(BaseDashboard):
             'title': self.title,
             'public_jobs': public_jobs,
             'my_jobs': my_jobs,
+            'my_bids': my_bids,
             'truck_plan_coordinates': truck_plan_coordinates,
             'coordinates_list_len': len(truck_plan_coordinates),
             'job_bids_id': 1,

@@ -16,34 +16,22 @@
 					        <th>Cargo Type</th>
 					        <th>Starting Point</th>
 					        <th>Destination</th>
-					        <th>Bid</th>
-					        <th>Submit</th>
+					        <th>Amount</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					    	{% for job in my_jobs %}
+					    	{% for bid in my_bids %}
 						       <tr>
-		<!-- <form name="form1" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
-  			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
-		</form> -->
-						        <td>{{job.cargo_type}} </td>
-						        <td>{{job.starting_point}}</td>
-						        <td>{{job.destination}}</td>
-						        <td><button class="btn btn-primary" type="submit">Add</button></td>
-						        <td>Accepted</td>
-						        <td>
-								<select name="select_action" id="select_action">
-									{% if job.job_status == 'assigned' %}
-									  <option value="accept">Accept</option>
-									  <option value="reject">Reject</option>
-									{% elif job.job_status == 'accepted' %}
-									  <option value="in_progress">In Progress</option>
-									{% elif job.job_status == 'in_progress' %}
-									  <option value="completed">Completed</option>
-									{% endif %}
-								</select>
-								</td>
+									<form name="form1" id="bidform{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
+							  			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
+									</form>
+							        <td>{{bid.job.cargo_type}} </td>
+							        <td>{{bid.job.starting_point}}</td>
+							        <td>{{bid.job.destination}}</td>
+							        <td>{{bid.bidding_amount}}</td>
+							        <td><button class="btn btn-primary" type="submit">Accept</button></td>
+								</tr>
 							{% endfor %}
 					    </tbody>
 					  </table>
