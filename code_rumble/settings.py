@@ -23,8 +23,12 @@ PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc'
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'code_rumble',
+            'USER': 'travis',
+            'HOST': '',
+            'PORT': '',
+            'ATOMIC_REQUESTS': True,
         },
     }
 else:
