@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 from ..constants import INDIVIDUAL, SHIPPER, UNDER_CONSIDERATION, ACCEPTED, REJECTED, ASSIGNED, IN_PROGRESS, NEW
+from ..choices import GENDER
 from .company import Company
 
 
@@ -14,6 +15,26 @@ class UserProfile(models.Model):
     validated = models.BooleanField(default=False)
     account = models.CharField(max_length=10)
     company = models.ForeignKey(Company, null=True)
+
+    gender = models.CharField(
+        max_length=6,
+        choices=GENDER,
+        null=True,
+        blank=True,
+    )
+
+    dob = models.DateField(
+        verbose_name='Date of Birth',
+        null=True,
+        blank=True,
+    )
+
+    omang = models.CharField(
+        verbose_name='Omang no',
+        max_length=9,
+        null=True,
+        blank=True,
+    )
 
     def create_job(self, options):
         Job = models.get_model('main', 'Job')

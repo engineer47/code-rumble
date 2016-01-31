@@ -77,6 +77,30 @@ class Job(models.Model):
         blank=True
     )
 
+    start_lat = models.DecimalField(
+        verbose_name=' start latitude',
+        max_digits=10,
+        null=True,
+        decimal_places=6)
+
+    start_lon = models.DecimalField(
+        verbose_name='start longitude',
+        max_digits=10,
+        null=True,
+        decimal_places=6)
+
+    dest_lat = models.DecimalField(
+        verbose_name='end latitude',
+        max_digits=10,
+        null=True,
+        decimal_places=6)
+
+    dest_lon = models.DecimalField(
+        verbose_name='end longitude',
+        max_digits=10,
+        null=True,
+        decimal_places=6)
+
     def assign_job(self, exercutor):
         if exercutor.account == SHIPPER:
             self.exercutor = exercutor

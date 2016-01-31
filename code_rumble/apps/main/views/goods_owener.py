@@ -79,7 +79,7 @@ class GoodsOwner(BaseDashboard):
         elif task == '4':
             self.template_name = 'job_form.html'
         job_form = JobForm()
-        my_jobs = Job.objects.filter(sumbittor__user__username=request.user.username, ob_status__in=[NEW])
+        my_jobs = Job.objects.filter(sumbittor__user__username=request.user.username, job_status__in=[NEW])
         truck_plan_coordinates = [
             [-24.619168, 25.934612],
             [-24.378842, 26.062498],

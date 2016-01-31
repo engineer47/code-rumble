@@ -41,12 +41,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <link rel="stylesheet/less" href="{{ STATIC_URL }}style.less">
-    <link rel="stylesheet" href="{{ STATIC_URL }}thickbox.css" type="text/css" media="screen" />
-    <script src="{{ STATIC_URL }}less.js"></script>
-    <script src="{{ STATIC_URL }}jquery-1.11.3.js"></script>
-    <script src="{{ STATIC_URL }}thickbox.js"></script>
 </head>
 <body>
 
@@ -64,7 +58,7 @@
                                 <a href="{% url 'user_profile' user.username%}">Personal Details</a>
                             </li>
                             <li>
-                                <a href="morris.html">Bank Account details</a>
+                                <a href="{% url 'banking_url' user.username%}">Bank Account details</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -83,14 +77,15 @@
        <!-- /.navbar-static-side -->
        <div class="login">
        {% block login %}
-	   {% if user.is_authenticated %}
-       <form action="/logout">
-           <input type="submit" id="btnLogOut" value="Log Out">
-       </form>
-       {% endif %}
-       {% endblock %}
-       
-       </div>
+
+		   {% if user.is_authenticated %}
+	       <form action="/logout">
+	           <input type="submit" id="btnLogOut" value="Log Out">
+	       </form>
+	       {% endif %}
+	     {% endblock %}
+</div>
+      
    
  
 {% block content %} 
@@ -98,7 +93,7 @@
    
  {% block footer %}
 <div id="footer">
-© Copyright 2016 Code Rumble &copy 2016. All Rights Reserved.
+�� Copyright 2016 Code Rumble &copy 2016. All Rights Reserved.
 {% endblock footer %}
 </body>
 </html>

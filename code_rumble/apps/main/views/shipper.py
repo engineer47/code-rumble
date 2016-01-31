@@ -11,6 +11,7 @@ from .base_dashboard import BaseDashboard
 
 from ..models import Job
 from ..constants import NEW, IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED
+from code_rumble.apps.main.models.bid import Bid
 
 
 class Shipper(BaseDashboard):
@@ -22,8 +23,32 @@ class Shipper(BaseDashboard):
 
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
+        job_identifier = request.GET.get("job_identifier")
+        change_job = request.GET.get("change_job")
+        if job_identifier:
+            public_jobs = Job.objects.filter(job_status__in=[NEW], job_identifier=job_identifier)
+        else:
+            public_jobs = Job.objects.filter(job_status__in=[NEW])
+
+        if change_job:
+            change_job = request.GET.get("change_job")
+            new_status = None
+            for vl in range(100):
+                name = "job_status" + str(vl)
+                if request.GET.get(name):
+                    new_status = request.GET.get(name)
+                    print name
+                    break
+            try:
+                job = Job.objects.get(job_identifier=request.GET.get('job_identifier'))
+                print job
+                job.job_status = new_status
+                job.save()
+            except Job.DoesNotExist:
+                pass
         public_jobs = Job.objects.filter(job_status__in=[NEW])
-        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
+        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED],
+                                     exercutor__user__username=request.user.username)
         if request.GET.get('job_type') == 'available_jobs':
             self.template_name = "shipper_available_jobs.html"
         else:
@@ -59,29 +84,22 @@ class Shipper(BaseDashboard):
     def get_context_data(self, **kwargs):
         return super(Shipper, self).get_context_data(**kwargs)
 
+    def job_biddings(self, job_identifier=None):
+        return Bid.objects.filter(job__job_identifier=job_identifier)
+
 
 def create_get(request):
     if request.method == 'GET':
         post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
-
-#         post = Post(text=post_text, author=request.user)
-#         post.save()
-
-#         response_data['result'] = 'Create post successful!'
-#         response_data['postpk'] = post.pk
-#         response_data['text'] = post.text
-#         response_data['created'] = post.created.strftime('%B %d, %Y %I:%M %p')
-#         response_data['author'] = post.author.username
-
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
         )
     else:
-        #post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
         )
+
