@@ -49,7 +49,7 @@ class Job(models.Model):
 
     weight = models.DecimalField(
         verbose_name='Weight of the Cargo',
-        max_digits=6,
+        max_digits=10,
         decimal_places=4,
         null=True,
         blank=True
