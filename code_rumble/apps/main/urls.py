@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
-
+from django.conf.urls import patterns, url, include
+from django.contrib import admin
 from code_rumble.apps.main.views.user_login import (user_profile, users, login_view, signup, logout_view,
                                                     verify_account)
 
@@ -7,9 +7,11 @@ from code_rumble.apps.main.views import Shipper, create_get, GoodsOwner
 
 from .views import Home
 
+admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^$', Home.as_view(), name='home_url'),
     url(r'^login$', login_view),
     url(r'^logout$', logout_view),

@@ -1,7 +1,7 @@
 {% extends "goods_owner.html" %}
 {% block controlled_table %}
 <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -10,15 +10,15 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 					<!-- <div class="container"> -->         
-					  <table class="table" id="job_table" name="job_table">
+					  <table class="table">
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
 					        <th>Starting Point</th>
 					        <th>Destination</th>
-					        <th>Bid</th>
-					        <th>Submit</th>
-					        <th>Action</th>
+					        <th>Status</th>
+					        <th>Shippers</th>
+					        <th>Assign</th>
 					      </tr>
 					    </thead>
 					    <tbody>
@@ -26,24 +26,20 @@
 						       <tr>
 		<form name="form1" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
   			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
+  			<input type="hidden" name="username" id="username">
 		</form>
 						        <td>{{job.cargo_type}} </td>
 						        <td>{{job.starting_point}}</td>
-						        <td>{{destination.0}}, {{destination.1}}</td>
-						        <td><button class="btn btn-primary" type="submit">Add</button></td>
+						        <td>{{job.destination}}</td>
 						        <td>Accepted</td>
 						        <td>
 								<select name="select_action" id="select_action">
-									{% if job.job_status == 'assigned' %}
-									  <option value="accept">Accept</option>
-									  <option value="reject">Reject</option>
-									{% elif job.job_status == 'accepted' %}
-									  <option value="in_progress">In Progress</option>
-									{% elif job.job_status == 'in_progress' %}
-									  <option value="completed">Completed</option>
-									{% endif %}
+								{% for shipper in shippers %}
+									  <option value="{{shipper.username}}">{{shipper.user.first_name}} {{shipper.user.last_name}}</option>
+								{% endfor %}
 								</select>
 								</td>
+								<td><button type="submit" class="btn btn-primary">Assign</button></td>
 							{% endfor %}
 					    </tbody>
 					  </table>
@@ -66,7 +62,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Notifications Panel

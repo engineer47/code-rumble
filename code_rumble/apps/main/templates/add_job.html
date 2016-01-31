@@ -1,4 +1,7 @@
 {% extends "goods_owner.html" %}
+{% load admin_urls %}
+{% load url from future %}
+
 {% block controlled_table %}
 <div class="row">
                 <div class="col-lg-8">
@@ -10,7 +13,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 					<!-- <div class="container"> -->         
-					  <table class="table" id="job_table" name="job_table">
+					  <table class="table">
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
@@ -18,11 +21,15 @@
 					        <th>Destination</th>
 					      </tr>
 					    </thead>
+					    
 					    <tbody>
+						{% for job in my_jobs %}
 								<tr><td>{{job.cargo_type}} </td>
 						        <td>{{job.starting_point}}</td>
-						        <td>{{destination.0}}, {{destination.1}}</td></tr>
-						        <td colspan="3"><a href="#"><img alt="" src="{{ STATIC_URL }}/gfx/add_job.png"></a></td>
+						        <td>{{job.destination}}</td></tr>
+						        <td colspan="3"></td>
+					    {% endfor %}
+					 <!--  <a href="{% url 'goods_owner_url' job_form_id %}"><img alt="" src="{{ STATIC_URL }}/gfx/add_job.png"></a>  -->
 					    </tbody>
 					  </table>
                         </div>

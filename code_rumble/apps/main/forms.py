@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.utils.html import strip_tags
 
-
+from .models import Job
 from .models import UserProfile
 from ..main.custom_form_fields import SubmitButtonField
 from .choices import ACCOUNT_TYPE
@@ -90,3 +90,10 @@ class UserProfileForm(forms.ModelForm):
         fields = ['email', 'username', 'first_name', 'last_name']
         profile_fields = ['mobile']
         model = UserProfile
+
+
+class JobForm(forms.ModelForm):
+    pass
+
+    class Meta:
+        model = Job

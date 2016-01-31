@@ -8,8 +8,9 @@ PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 LOGIN_URL = '/'
 
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
-
+GIT_DIR = BASE_DIR.ancestor(1)
 DEBUG = True
+FIELD_MAX_LENGTH='default'
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -162,5 +163,5 @@ LOGGING = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'coderumble2016@gmail.com'
+EMAIL_HOST_PASSWORD = 'rumble2016ub'
