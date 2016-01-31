@@ -153,7 +153,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 					<!-- <div class="container"> -->         
-					  <table class="table" id="job_table" name="job_table">
+					  <table class="table">
 					    <thead>
 					      <tr>
 					        <th>Cargo Type</th>
@@ -168,13 +168,16 @@
 						       <tr>
 		<form name="form{{forloop.counter0}}" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
   			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
+  			<input type="hidden" name="job_status{{forloop.counter0}}" id="job_status{{forloop.counter0}}">
+  			<input type="hidden" name="new_job_status" id="new_job_status">
+  			<input type="hidden" name="change_job" id="change_job" value="change_job">
 		</form>
 						        <td>{{job.cargo_type}} </td>
 						        <td>{{job.starting_point}}</td>
-						        <td>{{destination}}</td>
-						        <td>Accepted</td>
+						        <td>{{job.destination}}</td>
+						        <td>{{job.job_status}}</td>
 						        <td>
-								<select name="select_action" id="select_action">
+								<select name="select_action1" id="select_action1">
 									{% if job.job_status == 'assigned' %}
 									  <option value="accept">Accept</option>
 									  <option value="reject">Reject</option>									  
@@ -182,6 +185,9 @@
 									  <option value="in_progress">In Progress</option>
 									{% elif job.job_status == 'in_progress' %}
 									  <option value="completed">Completed</option>
+									{% else %}
+									  <option value="test1">Test1</option>
+									  <option value="test2">Test2</option>
 									{% endif %}
 								</select>
 								</td>
@@ -214,15 +220,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        {% for bidder in biddings %}
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> {{bidder.bid_owner.user.first_name}} {{bidder.bid_owner.user.last_name}}
-                                    <span class="pull-right text-muted small"><em>{{bidder.bidding_amount}}</em>
-                                    </span>
-                                </a>
-                              </div>
-                         {% endfor %}
+ 							<p>No Notifications.</p>
                             <!-- /.list-group -->
                             <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                         </div>
