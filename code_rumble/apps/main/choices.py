@@ -51,3 +51,15 @@ CARGO_TYPE = (
     ('fragile', 'Fragile'),
     ('mechanical', 'Mechanical'),
 )
+
+GENDER = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+)
+
+BANK_ACCOUNT_TYPE = (
+    ('savings', 'Savings'),
+    ('current', 'Current'),
+    ('business', 'Business'),
+    ('loan', 'Loan'),
+)

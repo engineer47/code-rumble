@@ -7,7 +7,7 @@ from django.utils.html import strip_tags
 
 from .models import UserProfile
 from ..main.custom_form_fields import SubmitButtonField
-from .choices import ACCOUNT_TYPE
+from .choices import ACCOUNT_TYPE, GENDER
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Email'}))
@@ -49,6 +49,7 @@ class UserProfileForm(forms.ModelForm):
     last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'readonly': 'Last Name'}))
     mobile = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={'readonly': 'mobile number'}))
     username = forms.CharField(widget=forms.widgets.TextInput(attrs={'readonly': 'Username'}))
+    dob = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Date Of Birth'}))
     submit_button = SubmitButtonField(label='Save', initial="Save")
 #     password1 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
 #     password2 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password Confirmation'}))

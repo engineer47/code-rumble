@@ -58,7 +58,7 @@
                                 <a href="{% url 'user_profile' user.username%}">Personal Details</a>
                             </li>
                             <li>
-                                <a href="morris.html">Bank Account details</a>
+                                <a href="{% url 'banking_url' user.username%}">Bank Account details</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

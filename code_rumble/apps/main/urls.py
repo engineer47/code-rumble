@@ -2,8 +2,10 @@ from django.conf.urls import patterns, url
 
 from code_rumble.apps.main.views.user_login import (user_profile, users, login_view, signup, logout_view,
                                                     verify_account)
+
 from code_rumble.apps.main.views import Shipper, AddBid, ViewBids, create_get
-from code_rumble.apps.main.views import Shipper, create_get, GoodsOwner
+from code_rumble.apps.main.views import Shipper, create_get, GoodsOwner, AccountDetails
+
 
 from .views import Home
 
@@ -24,6 +26,7 @@ urlpatterns = patterns(
     url(r'view_bids', ViewBids.as_view(), name='view_bids_url'),
     url(r'^goods_owner/(?P<task_id>[1-9]{1})$', GoodsOwner.as_view(), name='goods_owner_url'),
     url(r'job', create_get, name='job_url'),
+    url(r'^account_details/(?P<username>\w{0,30})/$', AccountDetails.as_view(), name='banking_url')
 )
 
 urlpatterns += patterns(
