@@ -77,17 +77,14 @@
        <!-- /.navbar-static-side -->
        <div class="login">
        {% block login %}
-
 		   {% if user.is_authenticated %}
 	       <form action="/logout">
 	           <input type="submit" id="btnLogOut" value="Log Out">
 	       </form>
 	       {% endif %}
 	     {% endblock %}
-</div>
-      
-   
- 
+		</div>
+  
 {% block content %} 
 {% endblock %}
    
