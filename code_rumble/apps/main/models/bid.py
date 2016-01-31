@@ -17,7 +17,7 @@ class Bid(models.Model):
 
     bid_status = models.CharField(
         verbose_name='Bid Status',
-        max_length=10,
+        max_length=20,
         default=NEW,
     )
 

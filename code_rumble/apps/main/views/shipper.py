@@ -23,7 +23,8 @@ class Shipper(BaseDashboard):
     def get(self, request, *args, **kwargs):
         notifications = 'Notifications.objects.all()'
         public_jobs = Job.objects.filter(job_status__in=[NEW])
-        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
+        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED],
+                                     exercutor__user__username=request.user.username)
         if request.GET.get('job_type') == 'available_jobs':
             self.template_name = "shipper_available_jobs.html"
         else:

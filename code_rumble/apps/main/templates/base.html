@@ -41,12 +41,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <link rel="stylesheet/less" href="{{ STATIC_URL }}style.less">
-    <link rel="stylesheet" href="{{ STATIC_URL }}thickbox.css" type="text/css" media="screen" />
-    <script src="{{ STATIC_URL }}less.js"></script>
-    <script src="{{ STATIC_URL }}jquery-1.11.3.js"></script>
-    <script src="{{ STATIC_URL }}thickbox.js"></script>
 </head>
 <body>
 
@@ -81,15 +75,16 @@
            <!-- /.sidebar-collapse -->
        </div>
        <!-- /.navbar-static-side -->
-       {% if user.is_authenticated %}
        <div class="login">
        {% block login %}
-       <form action="/logout">
-           <input type="submit" id="btnLogOut" value="Log Out">
-       </form>
+       		{% if user.is_authenticated %}
+		       <form action="/logout">
+		           <input type="submit" id="btnLogOut" value="Log Out">
+		       </form>
+		     {% endif %}
        {% endblock %}
-       {% endif %}
        </div>
+      
    
  
 {% block content %} 
