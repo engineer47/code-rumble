@@ -137,7 +137,7 @@ def logout_view(request):
 def verify_account(request, username):
     try:
         user_profile = UserProfile.objects.get(user__username=username)
-        user_profile.validate = True
+        user_profile.validated = True
         user_profile.save()
         message = "Congratulations '{}', your account has been verified.".format(user_profile.user.first_name)
     except UserProfile.DoesNotExist:
@@ -156,8 +156,9 @@ def signup(request):
             password = user_form.clean_password2()
             with transaction.atomic():
                 user_form.save()
-                user = authenticate(username=username, password=password)
-                login(request, user)
+#                 user = authenticate(username=username, password=password)
+#                 login(request, user)
+                user = user_form.instance
                 form_values = {}
                 for fld in UserCreateForm.Meta.profile_fields:
                     form_values[fld] = user_form.cleaned_data[fld]
