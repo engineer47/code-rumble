@@ -6,3 +6,4 @@ from .user_login import user_profile, users, index, login_view, signup, logout_v
 from .base_dashboard import BaseDashboard
 from .add_bid import AddBid
 from .view_bids import ViewBids
+from .account import AccountDetails

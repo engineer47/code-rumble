@@ -1,6 +1,6 @@
 from django.db import models
 
-from ..choices import PAYMENT_MODE, PAYMENT_STATUS, BANK
+from ..choices import PAYMENT_MODE, PAYMENT_STATUS, BANK, BANK_ACCOUNT_TYPE
 
 from .user_profile import UserProfile
 
@@ -25,10 +25,20 @@ class AccountDetails(models.Model):
         max_length=25,
     )
 
+    account_type = models.CharField(
+        verbose_name='Account Type',
+        max_length=25,
+        choices=BANK_ACCOUNT_TYPE,
+        null=True,
+        blank=True,
+    )
+
     payment_mode = models.CharField(
         verbose_name='Payment mode',
         max_length=25,
         choices=PAYMENT_MODE,
+        null=True,
+        blank=True,
     )
 
     class Meta:
