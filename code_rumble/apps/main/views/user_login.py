@@ -192,7 +192,7 @@ def login_view(request):
         if form.is_valid() and UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True):
             login(request, form.get_user())
             # Success
-            return redirect('/shipper')
+            return redirect('/shipper?job_type=my_jobs')
         else:
             # Failure
             return index(request, auth_form=form)

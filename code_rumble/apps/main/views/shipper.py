@@ -46,9 +46,9 @@ class Shipper(BaseDashboard):
                 job.save()
             except Job.DoesNotExist:
                 pass
-
-        my_jobs = Job.objects. all() # filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED])
-        job_identifier = request.GET.get('job_identifier')
+        public_jobs = Job.objects.filter(job_status__in=[NEW])
+        my_jobs = Job.objects.filter(job_status__in=[IN_PROGRESS, ACCEPTED, ASSIGNED, COMPLETED],
+                                     exercutor__user__username=request.user.username)
         if request.GET.get('job_type') == 'available_jobs':
             self.template_name = "shipper_available_jobs.html"
         else:
@@ -72,7 +72,6 @@ class Shipper(BaseDashboard):
             'truck_plan_coordinates': truck_plan_coordinates,
             'coordinates_list_len': len(truck_plan_coordinates),
             'destination': destination,
-            'job_biddings': self.job_biddings(job_identifier)
         })
         return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 
