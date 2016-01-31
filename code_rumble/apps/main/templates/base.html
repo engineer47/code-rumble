@@ -43,7 +43,7 @@
     <![endif]-->
 </head>
 <body>
-
+	{% block navigation %}
        <div class="navbar-default sidebar" role="navigation">
            <div class="sidebar-nav navbar-collapse">
                <ul class="nav" id="side-menu">
@@ -80,6 +80,7 @@
            </div>
            <!-- /.sidebar-collapse -->
        </div>
+       {% endblock %}
        <!-- /.navbar-static-side -->
        <div class="login">
        {% block login %}

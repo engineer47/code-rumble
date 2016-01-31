@@ -128,7 +128,7 @@ def login_view(request):
             return index(request, auth_form=form)
     return redirect('/')
 
-
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('/')
