@@ -17,7 +17,7 @@ class ViewBids(BaseDashboard):
         super(ViewBids, self).__init__()
 
     def get(self, request, *args, **kwargs):
-        pass
+        return render_to_response(self.template_name, self.context, context_instance=RequestContext(request))
 
     def post(self, request, *args, **kwargs):
         job = Job.objects.get(job_identifier=request.POST.get('job_identifier'))

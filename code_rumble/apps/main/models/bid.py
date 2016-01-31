@@ -29,5 +29,12 @@ class Bid(models.Model):
 
     expired = models.BooleanField(default=False)
 
+    def email_notification_options(self):
+        message_to = self.bid_owner.user.email
+        subject = "Bid for job '{}' has been modified".format(self.job.job_identifier)
+        message = "status={}, amount={}".format(self.bid_status, self.bidding_amount)
+        owner = self.bid_owner
+        return (message_to, subject, message, owner)
+
     class Meta:
         app_label = 'main'

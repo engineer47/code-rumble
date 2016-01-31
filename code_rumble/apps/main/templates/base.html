@@ -51,24 +51,30 @@
                        <a href="{% url 'home_url' %}"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                    </li>
                    {% if user.is_authenticated %}
-	               <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> My Profile</a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="{% url 'user_profile' user.username%}">Personal Details</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'banking_url' user.username%}">Bank Account details</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
+		               <li>
+	                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> My Profile</a>
+	                        <ul class="nav nav-second-level">
+	                            <li>
+	                                <a href="{% url 'user_profile' user.username%}">Personal Details</a>
+	                            </li>
+	                            <li>
+	                                <a href="{% url 'banking_url' user.username%}">Bank Account details</a>
+	                            </li>
+	                        </ul>
+	                        <!-- /.nav-second-level -->
+	                    </li>
+	                    <li>
+	                       <a href="{% url 'view_notifications' %}"><i class="fa fa-dashboard fa-fw"></i> View Notifications</a>
+	                   </li>
+	                   <li>
+                       		<a href="{% url 'shipper_url' %}?job_type=my_jobs""><i class="fa fa-dashboard fa-fw"></i>Jobs</a>
+                   	   </li>
                     {% endif %}
                     <li>
-                       <a href="tables.html"><i class="fa fa-table fa-fw"></i> Contact Us</a>
+                       <a href="#"><i class="fa fa-table fa-fw"></i> Contact Us</a>
                    </li>
                    <li>
-                       <a href="forms.html"><i class="fa fa-edit fa-fw"></i> About Us</a>
+                       <a href="#"><i class="fa fa-edit fa-fw"></i> About Us</a>
                    </li>
                </ul>
            </div>
@@ -81,7 +87,7 @@
 		       <form action="/logout">
 		           <input type="submit" id="btnLogOut" value="Log Out">
 		       </form>
-		     {% endif %}
+		    {% endif %}
        {% endblock %}
        </div>
       

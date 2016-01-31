@@ -129,5 +129,12 @@ class Job(models.Model):
                 Payment.objects.create(job=self, payment_status=PENDING)
         super(Job, self).save(*args, **kwargs)
 
+    def email_notification_options(self):
+        message_to = self.sumbittor.user.email
+        subject = "Job '{}' has been update".format(self.job_identifier)
+        message = "Job '{}' has been update".format(self.job_identifier)
+        owner = self.sumbittor
+        return (message_to, subject, message, owner)
+
     class Meta:
         app_label = 'main'

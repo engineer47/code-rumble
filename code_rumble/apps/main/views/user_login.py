@@ -120,7 +120,7 @@ def login_view(request):
         if form.is_valid() and user_profile:
             login(request, form.get_user())
 
-            if user_profile.account == SHIPPER:
+            if user_profile[0].account == SHIPPER:
                 return redirect('/shipper?job_type=my_jobs')
             else:
                 return redirect('/goods_owner/job_type=my_jobs')
