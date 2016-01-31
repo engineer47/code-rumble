@@ -2,7 +2,7 @@ Django==1.6.8
 GitPython==1.0.1
 M2Crypto==0.22.3
 MySQL-python==1.2.5
-PIL==1.1.7
+PIL
 South==0.8.1
 Unipath==1.1
 amqp==1.4.6
