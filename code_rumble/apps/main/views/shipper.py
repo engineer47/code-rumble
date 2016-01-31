@@ -92,22 +92,11 @@ def create_get(request):
     if request.method == 'GET':
         post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
-
-#         post = Post(text=post_text, author=request.user)
-#         post.save()
-
-#         response_data['result'] = 'Create post successful!'
-#         response_data['postpk'] = post.pk
-#         response_data['text'] = post.text
-#         response_data['created'] = post.created.strftime('%B %d, %Y %I:%M %p')
-#         response_data['author'] = post.author.username
-
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
         )
     else:
-        #post_text = request.GET.get('job_type')
         response_data = dict({"job_type": "My Job"})
         return HttpResponse(
             json.dumps(response_data),

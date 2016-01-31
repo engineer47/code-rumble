@@ -8,7 +8,7 @@ from .user_profile import UserProfile
 class AccountDetails(models.Model):
 
     '''
-    Account details keeps record of the user's account details.
+    Account details keeps record of the user's bank account details.
     '''
 
     user_profile = models.ForeignKey(UserProfile)
