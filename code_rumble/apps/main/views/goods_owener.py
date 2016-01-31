@@ -65,8 +65,15 @@ class GoodsOwner(BaseDashboard):
     def post(self, request, *args, **kwargs):
 
         job_form = JobForm(request.POST)
+        individual = UserProfile.objects.get(user=request.user)
         if job_form.is_valid():
-            job_form.save()
+            individual.create_job(
+                {'job_status':job_form.instance.job_status,
+                'starting_point':job_form.instance.starting_point,
+                'cargo_type':job_form.instance.cargo_type,
+                'destination':job_form.instance.destination,
+                'description':job_form.instance.description}
+            )
         public_jobs = Job.objects.filter(job_status__in=[NEW])
         task = kwargs.get('task_id', '1')
         job = kwargs.get('task_id', '1')
@@ -80,6 +87,8 @@ class GoodsOwner(BaseDashboard):
             self.template_name = 'job_form.html'
         job_form = JobForm()
         my_jobs = Job.objects.filter(sumbittor__user__username=request.user.username, job_status__in=[NEW])
+        print "my_jobs", my_jobs
+        print "username", request.user.username
         truck_plan_coordinates = [
             [-24.619168, 25.934612],
             [-24.378842, 26.062498],

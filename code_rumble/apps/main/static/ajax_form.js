@@ -27,25 +27,4 @@ $(document).ready(function() {
 //    } );
 } );
 
-$(function() {
-	var index = 0
-	$( "select" ).mouseover(function() {
-  		index =$(this).parent().parent().index();
-	});
-
- 	$("select").on( 'click', function () {
- 		
-        var name = "#form" + index;
-        var combo_val ="#job_status" + index;
-        $(combo_val).val($(this).val());
-        alert($(combo_val).val());
-        //var elem_job_status = name +" #job_status"
-        //alert(elem_job_status);
-        //alert($(elem_job_status).val());
-        //change_job_form = $(name);
-        //alert(change_job_form.job_status);
-                
-        $(name).submit();
-    });
-});
 

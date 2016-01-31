@@ -120,15 +120,15 @@ def login_view(request):
         if form.is_valid() and user_profile:
             login(request, form.get_user())
 
-            if user_profile.account == SHIPPER:
+            if user_profile[0].account == SHIPPER:
                 return redirect('/shipper?job_type=my_jobs')
             else:
-                return redirect('/goods_owner/job_type=my_jobs')
+                return redirect('/goods_owner/1')
         else:
             return index(request, auth_form=form)
     return redirect('/')
 
-
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('/')
@@ -137,7 +137,7 @@ def logout_view(request):
 def verify_account(request, username):
     try:
         user_profile = UserProfile.objects.get(user__username=username)
-        user_profile.validate = True
+        user_profile.validated = True
         user_profile.save()
         message = "Congratulations '{}', your account has been verified.".format(user_profile.user.first_name)
     except UserProfile.DoesNotExist:
@@ -156,8 +156,9 @@ def signup(request):
             password = user_form.clean_password2()
             with transaction.atomic():
                 user_form.save()
-                user = authenticate(username=username, password=password)
-                login(request, user)
+#                 user = authenticate(username=username, password=password)
+#                 login(request, user)
+                user = user_form.instance
                 form_values = {}
                 for fld in UserCreateForm.Meta.profile_fields:
                     form_values[fld] = user_form.cleaned_data[fld]

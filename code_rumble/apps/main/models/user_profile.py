@@ -98,6 +98,9 @@ class UserProfile(models.Model):
     def gravatar_url(self):
         return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
 
+#     def __unicode__(self):
+#         return (self.user.username,)
+
     class Meta:
         app_label = 'main'
 

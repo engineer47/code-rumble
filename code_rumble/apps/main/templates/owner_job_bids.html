@@ -24,12 +24,12 @@
 					    <tbody>
 					    	{% for job in my_jobs %}
 						       <tr>
-		<form name="form1" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
+		<!-- <form name="form1" id="form{{forloop.counter0}}" action="{% url 'shipper_url' %}" method="GET">
   			<input type="hidden" name="job_identifier" id="job_identifier" value="{{job.job_identifier}}">
-		</form>
+		</form> -->
 						        <td>{{job.cargo_type}} </td>
 						        <td>{{job.starting_point}}</td>
-						        <td>{{destination.0}}, {{destination.1}}</td>
+						        <td>{{job.destination}}</td>
 						        <td><button class="btn btn-primary" type="submit">Add</button></td>
 						        <td>Accepted</td>
 						        <td>

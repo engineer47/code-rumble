@@ -81,24 +81,28 @@ class Job(models.Model):
         verbose_name=' start latitude',
         max_digits=10,
         null=True,
+        blank=True,
         decimal_places=6)
 
     start_lon = models.DecimalField(
         verbose_name='start longitude',
         max_digits=10,
         null=True,
+        blank=True,
         decimal_places=6)
 
     dest_lat = models.DecimalField(
         verbose_name='end latitude',
         max_digits=10,
         null=True,
+        blank=True,
         decimal_places=6)
 
     dest_lon = models.DecimalField(
         verbose_name='end longitude',
         max_digits=10,
         null=True,
+        blank=True,
         decimal_places=6)
 
     def assign_job(self, exercutor):
@@ -128,6 +132,13 @@ class Job(models.Model):
             except Payment.DoesNotExist:
                 Payment.objects.create(job=self, payment_status=PENDING)
         super(Job, self).save(*args, **kwargs)
+
+    def email_notification_options(self):
+        message_to = self.sumbittor.user.email
+        subject = "Job '{}' has been update".format(self.job_identifier)
+        message = "Job '{}' has been update".format(self.job_identifier)
+        owner = self.sumbittor
+        return (message_to, subject, message, owner)
 
     class Meta:
         app_label = 'main'
