@@ -1,18 +1,17 @@
-import json
-from datetime import datetime
 from django.shortcuts import render, redirect
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.db.models import Count, Q
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.http import Http404
+
 from ..forms import (AuthenticateForm, UserCreateForm, UserProfileForm)
 from ..models import UserProfile
+from ..constants import SHIPPER
+
 
 
 def get_latest(user):
@@ -117,9 +116,14 @@ def index(request, auth_form=None, user_form=None):
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticateForm(data=request.POST)
-        if form.is_valid() and UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True):
+        user_profile = UserProfile.objects.filter(user__username=request.POST.get('username'), validated=True)
+        if form.is_valid() and user_profile:
             login(request, form.get_user())
-            return redirect('/shipper?job_type=my_jobs')
+
+            if user_profile.account == SHIPPER:
+                return redirect('/shipper?job_type=my_jobs')
+            else:
+                return redirect('/goods_owner/job_type=my_jobs')
         else:
             return index(request, auth_form=form)
     return redirect('/')
