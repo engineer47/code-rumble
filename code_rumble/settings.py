@@ -24,12 +24,8 @@ PATH = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2).child('etc'
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'code_rumble',
-            'USER': 'travis',
-            'HOST': '',
-            'PORT': '',
-            'ATOMIC_REQUESTS': True,
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         },
     }
 else:
@@ -167,5 +163,5 @@ LOGGING = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'coderumble2016@gmail.com'
-EMAIL_HOST_PASSWORD = 'rumble2016ub'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
