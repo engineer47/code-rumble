@@ -1,4 +1,9 @@
-
+def still_orders(items_in_orders):
+    for order in items_in_orders:
+        for item in order:
+            if item != 'x':
+                return False
+    return True
 
 if __name__ == '__main__':
     picture = []
@@ -29,7 +34,7 @@ if __name__ == '__main__':
         no_items_order = f.readline().strip('\n')
         items_in_orders = f.readline().strip('\n').split(' ')
         order_items.append(items_in_orders)
-# 
-#     while still_orders():
-#         pass    
+ 
+    while still_orders(items_in_orders):
+        pass
     
