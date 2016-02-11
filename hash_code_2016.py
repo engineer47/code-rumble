@@ -1,5 +1,6 @@
 import math
 
+
 def still_orders(items_in_orders):
     for order in items_in_orders:
         for item in order:
@@ -7,11 +8,14 @@ def still_orders(items_in_orders):
                 return False
     return True
 
+
 def ranked_orders():
     pass
 
+
 def satisfy_order():
     pass
+
 
 def warehouse_drone_turns(drones, warehouses):
     drone_turns_to_warehouse = []
