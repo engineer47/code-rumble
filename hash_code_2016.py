@@ -1,4 +1,15 @@
+import math
 
+
+def warehouse_drone_turns(drones, warehouses):
+    drone_turns_to_warehouse = []
+    for drone in drones:
+        row_a, col_a = drone
+        for warehouse in warehouses:
+            row_b, col_b = warehouse
+            turn = math.sqrt((row_a + row_b)**2 + (col_a - col_b)**2)
+            drone_turns_to_warehouse.append([turn, drone, warehouse])
+    return drone_turns_to_warehouse
 
 if __name__ == '__main__':
     picture = []
