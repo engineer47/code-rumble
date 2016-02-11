@@ -5,6 +5,14 @@ def still_orders(items_in_orders):
                 return False
     return True
 
+
+def ranked_orders():
+    pass
+
+
+def satisfy_order():
+    pass
+
 if __name__ == '__main__':
     picture = []
 #     f = open('/Users/sirone/picture_input.txt')
@@ -16,6 +24,14 @@ if __name__ == '__main__':
     count1 = 0
     f = open('/Users/sirone/Downloads/mother_of_all_warehouses.in')
     size_rows, size_columns, no_drones, max_turns, max_drone_weight = f.readline().split(' ')
+    size_rows = int(size_rows)
+    size_columns = int(size_columns)
+    no_drones = int(no_drones)
+    max_turns = int(max_turns)
+    drone_positions = []
+    for _ in range(0, no_drones):
+        # Initial Drone Position
+        drone_positions.append((0, 0))
     no_product_type = int(f.readline().strip('\n'))
     weights = f.readline().strip('\n').split(' ')
     for _ in range(0, no_product_type):
@@ -34,7 +50,9 @@ if __name__ == '__main__':
         no_items_order = f.readline().strip('\n')
         items_in_orders = f.readline().strip('\n').split(' ')
         order_items.append(items_in_orders)
- 
+
     while still_orders(items_in_orders):
-        pass
+        for order in ranked_orders():
+            satisfy_order()
+
     
