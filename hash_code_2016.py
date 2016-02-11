@@ -29,6 +29,7 @@ if __name__ == '__main__':
         no_items_order = f.readline()
         items_in_orders = f.readline().split(' ')
         order_items.append(items_in_orders)
-    
-    
+
+    while still_orders():
+        pass
     
